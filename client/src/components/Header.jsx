@@ -45,14 +45,12 @@ export default function Header() {
           <FaMoon className='text-lg' />
         </Button>
         <Link to='/signin'>
-          <Button className='rounded bg-blue-500 text-white' color='blue' pill>
+          <Button gradientDuoTone='purpleToPink' className='w-full'>
             Sign in
           </Button>
         </Link>
         <Navbar.Toggle/>
-        
       </div>
-       
     </Navbar>
   )
 }
