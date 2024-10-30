@@ -1,59 +1,57 @@
-import { Button, Navbar, TextInput } from "flowbite-react";
-import { Link, useLocation} from 'react-router-dom';
-import {AiOutlineSearch} from 'react-icons/ai';
-import {FaMoon} from 'react-icons/fa';
-
+import React from 'react';
+import { Button, Navbar, NavbarCollapse, TextInput } from "flowbite-react";
+import { Link, useLocation } from 'react-router-dom';
+import { FaMoon } from 'react-icons/fa';
+import { AiOutlineSearch } from 'react-icons/ai';
+import 'flowbite/dist/flowbite.css'; // Ensure this line is included
 
 export default function Header() {
-  const path = useLocation().pathname;
+    const path = useLocation().pathname;
   return (
-    <Navbar className='border-b-2'>
-        <Link to="/" className='self-center whitespace-nowrap 
-         sm:text-xl font-semibold dark:text-white'>
-            <span className='px-2 py-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 inline-block'>
-              TheCSCorner
-            </span> 
-            Blog
-        </Link>
-        <form >
-            <TextInput
-            type="text"
-            placeholder="Search...."
-            rightIcon={AiOutlineSearch }
-            
-            
-             />
-        </form>
-        <Navbar.Collapse>
-            <Navbar.Link active={path == "/"} as={"div"}>
-              <Link to ='/'>
-                Home
-              </Link>
-            </Navbar.Link>
-            <Navbar.Link active={path == "/About"} as={"div"}>
-              <Link to ='/About'>
-                About
-              </Link>
-            </Navbar.Link>
-            <Navbar.Link active={path == "/Project"} as={"div"}>
-              <Link to ='/Project'>
-                Project
-              </Link>
-            </Navbar.Link>
-          </Navbar.Collapse>
-        <div className="flex gap-2 md:order-2" >
-        <Button className='w-12 h-10 ' color='gray' pill>
-            <FaMoon />
-          </Button>
-          <Link to='/Signin'>
-            <Button gradientDuoTone='purpleToBlue' outline>
-              Sign In
-            </Button>
+    <Navbar className='border-b-2 flex justify-between items-center p-4'>
+      <Link to='/' className='self-center whitespace-nowrap text-sm sm:text-xl font-semibold'>
+        <span className='px-2 py-1 bg-gradient-to-r from-indigo-500 via-indigo-500 to-pink-500 rounded-lg text-white'>
+          Engineering
+        </span>
+        Reference
+      </Link>
+      <form className='flex-grow max-w-sm relative'> {/* Adjusted max-w-xs to max-w-sm */}
+        <TextInput
+          type="text"
+          placeholder="Search..."
+          className='w-full pr-10'
+        />
+        <AiOutlineSearch className='absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400' />
+      </form>
+      <Navbar.Collapse>
+        <Navbar.Link className={path === '/' ? 'text-blue-500' : ''} as={'div'}>
+          <Link to='/'>
+            Home
           </Link>
-          <Navbar.Toggle />
-                  
-        </div>
+        </Navbar.Link>
+        <Navbar.Link className={path === '/about' ? 'text-blue-500' : ''} as={'div'}>
+          <Link to='/about'>
+            About
+          </Link>
+        </Navbar.Link>
+        <Navbar.Link className={path === '/project' ? 'text-blue-500' : ''} as={'div'}>
+          <Link to='/project'>
+            Project
+          </Link>
+        </Navbar.Link>
+      </Navbar.Collapse>
+      <div className='flex items-center gap-2'>
+        <Button className='w-12 h-10 flex justify-center items-center' color='gray' pill size='sm'>
+          <FaMoon className='text-lg' />
+        </Button>
+        <Link to='/signin'>
+          <Button className='rounded bg-blue-500 text-white' color='blue' pill>
+            Sign in
+          </Button>
+        </Link>
+        <Navbar.Toggle/>
         
+      </div>
        
     </Navbar>
   )
