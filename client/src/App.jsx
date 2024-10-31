@@ -7,6 +7,7 @@ import About from './pages/About'
 import Project from './pages/Project'
 import Header from './components/Header'
 import Footer from './components/Footer'
+import PrivateRoute from './components/PrivateRoute'
 
 
 export default function App() {
@@ -17,7 +18,10 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
+        <Route element={<PrivateRoute />}>
+
         <Route path="/dashboard" element={<Dashboard />} />
+        </Route>
         <Route path="/about" element={<About />} />
         <Route path="/project" element={<Project />} />
 
