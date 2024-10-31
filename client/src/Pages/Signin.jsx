@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { set } from 'mongoose';
 import { useDispatch, useSelector } from 'react-redux';
 import { signinSuccess,signinFailure,signinStart } from '../redux/user/userSlice';
+import OAuth from '../components/OAuth';
 
 
 export default function Signin() {
@@ -100,12 +101,14 @@ export default function Signin() {
                 ) : 'Sign In'
               }
             </Button>
+            <OAuth />
           </form>
           <div className='flex gap-2 mt-5 text-sm'>
             <span>Dont have an account?</span>
             <Link to='/signup' className='text-blue-500'>
               Sign Up
             </Link>
+            
           </div>
           {
             errorMessage && (
