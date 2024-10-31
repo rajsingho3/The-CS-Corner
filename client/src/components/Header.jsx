@@ -12,6 +12,8 @@ export default function Header() {
     const dispatch = useDispatch();
     const currentUser = useSelector(state => state.user.currentUser);
     const theme = useSelector(state => state.theme.theme);
+    const defaultProfilePicture = 'path/to/default/profile/picture.jpg'; // Add a default profile picture
+
   return (
     <Navbar className='border-b-2 flex justify-between items-center p-4'>
       <Link to='/' className='self-center whitespace-nowrap text-sm sm:text-xl font-semibold'>
@@ -53,7 +55,7 @@ export default function Header() {
         {currentUser ? (
           <Dropdown arrowIcon={false} inline label={<Avatar
           alt='User'
-          img={currentUser.profilePicture} rounded 
+          img={currentUser.profilePicture || defaultProfilePicture} rounded 
           />}>
             <Dropdown.Header>
               <span className='block text-sm'>{currentUser.username}</span>
