@@ -1,5 +1,5 @@
 import { Alert, Button, Label, Spinner, TextInput } from 'flowbite-react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate} from 'react-router-dom';
 import { useState } from 'react';
 import { set } from 'mongoose';
@@ -10,7 +10,7 @@ import OAuth from '../components/OAuth';
 
 export default function Signin() {
   const [formData, setFormData] = useState({});
-  const {loading, error: errorMessage} = useSelector(state => state.user);
+  const {loading, error: errorMessage, user} = useSelector(state => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleChange = (e) => {
@@ -51,6 +51,8 @@ export default function Signin() {
       dispatch(signinFailure(error.message));
     }
   }
+
+  
 
   return (
     <div className='min-h-screen mt-20'> 

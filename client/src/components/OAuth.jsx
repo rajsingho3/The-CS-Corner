@@ -40,6 +40,7 @@ export default function OAuth() {
             try {
                 const data = await res.json();
                 dispatch(signinSuccess(data));
+                navigate('/');
             } catch (jsonError) {
                 console.error('Error parsing JSON:', jsonError);
                 alert('Error parsing server response. Please try again.');

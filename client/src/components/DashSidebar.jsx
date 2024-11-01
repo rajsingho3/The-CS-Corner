@@ -12,6 +12,7 @@ import { Link, useLocation } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { signoutScuccess } from '../redux/user/userSlice';
 
 export default function DashSidebar() {
   const location = useLocation();
@@ -34,7 +35,8 @@ export default function DashSidebar() {
       if (!res.ok) {
         console.log(data.message);
       } else {
-        dispatch(signoutSuccess());
+        dispatch(signoutScuccess());
+        navigate('/login'); // Redirect to login page after signout
       }
     } catch (error) {
       console.log(error.message);
