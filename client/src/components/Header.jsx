@@ -27,7 +27,7 @@ export default function Header() {
           console.log(data.message);
         } else {
           dispatch(signoutScuccess());
-          navigate('/login'); // Redirect to login page after signout
+          navigate('/signin'); // Redirect to login page after signout
         }
       } catch (error) {
         console.log(error.message);
