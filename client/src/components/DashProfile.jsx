@@ -9,7 +9,7 @@ import 'react-circular-progressbar/dist/styles.css';
 import { app } from '../firebase';
 import { signoutScuccess } from '../redux/user/userSlice';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 export default function DashProfile() {
   const currentUser = useSelector(state => state.user.currentUser);
@@ -118,7 +118,18 @@ export default function DashProfile() {
         <TextInput type='emailt' id='email' placeholder='email' defaultValue={currentUser.email}/>
         <TextInput type='password' id='password' placeholder='Password' />
 
-        <Button type='sumbit' gradientDuoTone='purpleToPink' outline >Update</Button>
+        <Button type='submit' gradientDuoTone='purpleToPink' outline>Update</Button>
+        {currentUser.isAdmin && (
+          <Link to={'/create-post'}>
+            <Button
+              type='button'
+              gradientDuoTone='purpleToPink'
+              className='w-full'
+            >
+              Create a post
+            </Button>
+          </Link>
+        )}
       </form>
       <div className='text-red-500 flex justify-between mt-5'>
         <span className='cursor-pointer'>Delete Account </span>
