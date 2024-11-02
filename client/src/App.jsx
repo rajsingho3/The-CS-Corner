@@ -13,6 +13,7 @@ import CreatePost from './Pages/CreatePost'
 import UpdatePost from './Pages/UpdatePost'
 import PostPage from './Pages/PostPage'
 import ScrollToTop from './components/ScrollToTop'
+import Search from './Pages/Search'
 
 
 export default function App() {
@@ -24,6 +25,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/search" element={<Search />} />        
         <Route element={<PrivateRoute />}>
 
         <Route path="/dashboard" element={<Dashboard />} />
