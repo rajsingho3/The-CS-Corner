@@ -1,4 +1,4 @@
-import { Sidebar } from 'flowbite-react';
+import { Sidebar, Button } from 'flowbite-react';
 import {
   HiUser,
   HiArrowSmRight,
@@ -82,8 +82,15 @@ export default function DashSidebar() {
           {currentUser.isAdmin && (
             <>
               
-              
-              
+              <Link to={'/create-post'}>
+                <Sidebar.Item
+                  type='button'
+                  icon={HiAnnotation}
+                  className='w-full'
+                >
+                  Write an article
+                </Sidebar.Item>
+              </Link>
             </>
           )}
           <Sidebar.Item

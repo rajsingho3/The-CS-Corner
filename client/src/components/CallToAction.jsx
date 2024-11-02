@@ -11,7 +11,7 @@ export default function CallToAction() {
                 Use for Promoting pages or important things
             </p>
             <Button gradientDuoTone='purpleToPink' className='rounded-tl-xl rounded-bl-none'>
-                <a href="https://www.100jsprojects.com" target='_blank' rel='noopener noreferrer'>
+                <a href="" target='_blank' rel='noopener noreferrer'>
                     Something you want to promote
                 </a>
             </Button>
