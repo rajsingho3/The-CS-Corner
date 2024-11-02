@@ -32,6 +32,18 @@ export default function FooterCom() {
               </Footer.LinkGroup>
             </div>
             <div>
+              <Footer.Title title='Feedback Form' />
+              <Footer.LinkGroup>
+                <Footer.Link
+                  href='https://rajsingh.notion.site/132b96f536f6808ea440fe275ba16348?pvs=105'
+                  target='_blank'
+                  rel='noopener noreferrer'
+                >
+                  Write to us
+                </Footer.Link>
+              </Footer.LinkGroup>
+            </div>
+            <div>
               <Footer.Title title='Follow us' />
               <Footer.LinkGroup col>
                 <Footer.Link
@@ -44,13 +56,7 @@ export default function FooterCom() {
                 <Footer.Link href='#'>LinkedIn</Footer.Link>
               </Footer.LinkGroup>
             </div>
-            <div>
-              <Footer.Title title='Legal' />
-              <Footer.LinkGroup col>
-                <Footer.Link href='#'>Privacy Policy</Footer.Link>
-                <Footer.Link href='#'>Terms &amp; Conditions</Footer.Link>
-              </Footer.LinkGroup>
-            </div>
+            
           </div>
         </div>
         <Footer.Divider />
