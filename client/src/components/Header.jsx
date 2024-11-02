@@ -5,7 +5,7 @@ import { FaMoon, FaSun } from 'react-icons/fa';
 import { AiOutlineSearch } from 'react-icons/ai';
 import 'flowbite/dist/flowbite.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { toggleTheme } from '../redux/theme/themeslice';
+import { toggleTheme} from '../redux/theme/themeSlice';
 import { signoutScuccess } from '../redux/user/userSlice';
 
 export default function Header() {
