@@ -63,5 +63,5 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Contact
 
-If you have any questions or suggestions, feel free to contact me at [rajsingho3@gmail.com](mailto:rajsingho3@gmail.com).
+If you have any questions or suggestions, feel free to contact me at [rajsinghr.2409@gmail.com](mailto:rajsinghr.2409@gmail.com).
 
