@@ -1,5 +1,5 @@
 import { Alert, Button, FileInput, Select, TextInput } from 'flowbite-react';
-import ReactQuill from 'react-quill';
+import ReactQuill, { Quill } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import {
   getDownloadURL,
@@ -12,6 +12,163 @@ import { useState } from 'react';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { useNavigate } from 'react-router-dom';
+
+// Add CSS styles at the top of the file
+const pdfControlStyles = `
+  .pdf-controls {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    justify-content: center;
+  }
+  .pdf-button {
+    padding: 8px 16px;
+    background-color: #4F46E5;
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.3s ease;
+  }
+  .pdf-button:hover {
+    background-color: #4338CA;
+  }
+`;
+
+// Add custom CSS for the PDF button
+const additionalStyles = `
+  ${pdfControlStyles}
+  .ql-pdf {
+    width: 28px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ql-pdf svg {
+    width: 18px;
+    height: 18px;
+  }
+`;
+
+// Add style tag to document
+const styleTag = document.createElement('style');
+styleTag.textContent = additionalStyles;
+document.head.appendChild(styleTag);
+
+// Add this helper function before the modules definition
+const formatPdfUrl = (url) => {
+  // Handle Google Drive URLs
+  if (url.includes('drive.google.com')) {
+    const fileId = url.match(/[-\w]{25,}/);
+    if (fileId) {
+      return `https://drive.google.com/file/d/${fileId[0]}/preview`;
+    }
+  }
+  // Handle direct PDF URLs
+  if (url.endsWith('.pdf')) {
+    return url;
+  }
+  return null;
+};
+
+// Add custom icons for Quill
+const icons = Quill.import('ui/icons');
+icons['pdf'] = `<svg viewBox="0 0 24 24" width="24" height="24">
+  <path fill="currentColor" d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8.5 7.5c0 .83-.67 1.5-1.5 1.5H9v2H7.5V7H10c.83 0 1.5.67 1.5 1.5v1zm5 2c0 .83-.67 1.5-1.5 1.5h-2.5V7H15c.83 0 1.5.67 1.5 1.5v3zm4-3H19v1h1.5V11H19v2h-1.5V7h3v1.5zM9 9.5h1v-1H9v1zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm10 5.5h1v-3h-1v3z"/>
+</svg>`;
+
+// Add Quill toolbar configuration
+const modules = {
+  toolbar: {
+    container: [
+      [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
+      [{size: []}],
+      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+      [{'list': 'ordered'}, {'list': 'bullet'}, 
+       {'indent': '-1'}, {'indent': '+1'}],
+      ['link', 'image', 'video'],
+      ['pdf'], // Separate PDF button for better visibility
+      ['clean']                                         
+    ],
+    handlers: {
+      pdf: function() {
+        const value = prompt('Enter PDF URL (Direct link or Google Drive share link)');
+        if (value) {
+          const formattedUrl = formatPdfUrl(value);
+          if (formattedUrl) {
+            this.quill.insertEmbed(this.quill.getSelection().index, 'pdf', formattedUrl, 'user');
+          } else {
+            alert('Please provide a valid PDF URL or Google Drive share link');
+          }
+        }
+      }
+    }
+  }
+};
+
+const formats = [
+  'header', 'font', 'size',
+  'bold', 'italic', 'underline', 'strike', 'blockquote',
+  'list', 'bullet', 'indent',
+  'link', 'image', 'video', 'pdf' // Add 'pdf' here
+];
+
+// Register custom PDF embed module
+const Embed = Quill.import('blots/block/embed');
+
+class PdfBlot extends Embed {
+  static create(value) {
+    const container = document.createElement('div');
+    const iframe = document.createElement('iframe');
+    const controls = document.createElement('div');
+    
+    // Configure iframe
+    iframe.setAttribute('src', value);
+    iframe.setAttribute('type', 'application/pdf');
+    iframe.setAttribute('width', '100%');
+    iframe.setAttribute('height', '500px');
+    iframe.setAttribute('frameborder', '0');
+    iframe.setAttribute('allowfullscreen', 'true');
+    iframe.setAttribute('sandbox', 'allow-same-origin allow-scripts allow-forms');
+    
+    // Configure controls
+    controls.className = 'pdf-controls';
+    
+    // Download button
+    const downloadBtn = document.createElement('a');
+    downloadBtn.innerHTML = '⬇️ Download';
+    downloadBtn.className = 'pdf-button';
+    downloadBtn.href = value.replace('/preview', '/view');
+    downloadBtn.setAttribute('download', '');
+    downloadBtn.setAttribute('target', '_blank');
+    
+    // Full page view button
+    const fullViewBtn = document.createElement('a');
+    fullViewBtn.innerHTML = '🔍 Full View';
+    fullViewBtn.className = 'pdf-button';
+    fullViewBtn.href = value;
+    fullViewBtn.setAttribute('target', '_blank');
+    
+    // Append elements
+    controls.appendChild(downloadBtn);
+    controls.appendChild(fullViewBtn);
+    container.appendChild(iframe);
+    container.appendChild(controls);
+    
+    return container;
+  }
+
+  static value(node) {
+    return node.querySelector('iframe').getAttribute('src');
+  }
+}
+
+PdfBlot.blotName = 'pdf';
+PdfBlot.tagName = 'iframe';
+Quill.register(PdfBlot);
 
 export default function CreatePost() {
   const [file, setFile] = useState(null);
@@ -147,6 +304,8 @@ export default function CreatePost() {
           placeholder='Write something...'
           className='h-72 mb-12'
           required
+          modules={modules} // Add modules here
+          formats={formats} // Add formats here
           onChange={(value) => {
             setFormData({ ...formData, content: value });
           }}

@@ -88,6 +88,21 @@ export default function PostPage() {
         dangerouslySetInnerHTML={{ __html: post && post.content }}
       ></div>
       
+      <style jsx>{`
+        .post-content iframe[type="application/pdf"] {
+          width: 100%;
+          min-height: 500px;
+          border: 1px solid #e5e7eb;
+          border-radius: 4px;
+        }
+        .pdf-controls {
+          margin: 10px 0;
+        }
+        .pdf-button {
+          margin: 0 5px;
+        }
+      `}</style>
+      
       <div className='flex flex-col justify-center items-center mb-5'>
         <h1 className='text-xl mt-5'>Recent articles</h1>
         <div className='flex flex-wrap gap-5 mt-5 justify-center'>
