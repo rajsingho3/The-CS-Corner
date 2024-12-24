@@ -16,6 +16,8 @@ export default function Header() {
     const theme = useSelector(state => state.theme.theme);
     const [searchTerm, setSearchTerm] = useState(''); // Add setSearchTerm
     const location = useLocation(); // Add useLocation
+    const [isSearchBoxVisible, setIsSearchBoxVisible] = useState(false); // Add state for search box visibility
+    const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 640); // Add state for screen size
 
     useEffect(() => {
         const urlParams = new URLSearchParams(location.search);
@@ -25,13 +27,32 @@ export default function Header() {
         }
     }, [location.search]);
 
+    useEffect(() => {
+        const handleResize = () => {
+            setIsSmallScreen(window.innerWidth < 640);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
     };
 
     const handleSearchSubmit = (e) => {
         e.preventDefault();
-        navigate(`search/?searchTerm=${searchTerm}`);
+        if (!searchTerm.trim() && isSmallScreen) {
+            setIsSearchBoxVisible(false);
+        } else {
+            navigate(`search/?searchTerm=${searchTerm}`);
+        }
+    };
+
+    const toggleSearchBox = () => {
+        setIsSearchBoxVisible(!isSearchBoxVisible);
     };
 
     const handleSignout = async () => {
@@ -61,16 +82,22 @@ export default function Header() {
                 </span>
                 Reference
             </Link>
-            <form className='flex-grow max-w-sm relative' onSubmit={handleSearchSubmit}> {/* Add onSubmit */}
-                <TextInput
-                    type="text"
-                    placeholder="Search..."
-                    className='w-full pr-10'
-                    value={searchTerm} // Add value
-                    onChange={handleSearchChange} // Add onChange
-                />
-                <AiOutlineSearch className='absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400' />
-            </form>
+            <div className='flex-grow max-w-sm relative ml-4'> {/* Add margin-left */}
+                {isSearchBoxVisible || !isSmallScreen ? ( // Conditionally render based on state and screen size
+                    <form className='w-full' onSubmit={handleSearchSubmit}>
+                        <TextInput
+                            type="text"
+                            placeholder="Search..."
+                            className='w-full pr-10 text-sm py-1'
+                            value={searchTerm}
+                            onChange={handleSearchChange}
+                        />
+                        
+                    </form>
+                ) : (
+                    <AiOutlineSearch className='text-gray-600 cursor-pointer sm:hidden text-2xl' onClick={toggleSearchBox} /> // Improved visibility
+                )}
+            </div>
             <Navbar.Collapse>
                 <Navbar.Link className={path === '/' ? 'text-blue-500' : ''} as={'div'}>
                     <Link to='/'>
