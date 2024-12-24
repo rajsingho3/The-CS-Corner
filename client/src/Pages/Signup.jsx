@@ -21,7 +21,13 @@ export default function Signup() {
     e.preventDefault();
     if (!formData.username || !formData.email || !formData.password) {
       return setErrorMessage('Please fill in all fields');
-      
+    }
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(formData.email)) {
+      return setErrorMessage('Please enter a valid email address');
+    }
+    if (formData.password.length < 8) {
+      return setErrorMessage('Password must be at least 8 characters long and contain a mix of letters, numbers, and special characters');
     }
     try {
       setLoading(true);
