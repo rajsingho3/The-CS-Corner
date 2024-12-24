@@ -115,10 +115,12 @@ export default function Header() {
                     </Link>
                 </Navbar.Link>
             </Navbar.Collapse>
-            <div className='flex items-center gap-2'>
-                <Button className='w-12 h-10 flex justify-center items-center' color='gray' pill size='sm' onClick={() => dispatch(toggleTheme())}>
-                    {theme === 'light' ? <FaSun /> : <FaMoon />}
-                </Button>
+            <div className='flex items-center gap-1'> {/* Reduced gap from 2 to 1 */}
+                {!isSmallScreen && ( // Hide dark mode button on small screens
+                    <Button className='w-12 h-10 flex justify-center items-center' color='gray' pill size='sm' onClick={() => dispatch(toggleTheme())}>
+                        {theme === 'light' ? <FaSun /> : <FaMoon />}
+                    </Button>
+                )}
                 {currentUser ? (
                     <Dropdown arrowIcon={false} inline label={<Avatar
                         alt='User'
