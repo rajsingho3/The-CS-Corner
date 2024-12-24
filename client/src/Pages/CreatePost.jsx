@@ -91,7 +91,13 @@ const modules = {
        {'indent': '-1'}, {'indent': '+1'}],
       ['link', 'image', 'video'],
       ['pdf'], // Separate PDF button for better visibility
-      ['clean']                                         
+      [{ 'align': [] }], // Add alignment options
+      [{ 'color': [] }, { 'background': [] }], // Add color and background options
+      ['code-block'], // Add code block option
+      ['clean'], // Add clean option
+      ['emoji'], // Add emoji option
+      ['table'], // Add table option
+      ['formula'] // Add formula option
     ],
     handlers: {
       pdf: function() {
@@ -104,6 +110,18 @@ const modules = {
             alert('Please provide a valid PDF URL or Google Drive share link');
           }
         }
+      },
+      // Add custom handler for emoji
+      emoji: function() {
+        // Custom handler logic for emoji
+      },
+      // Add custom handler for table
+      table: function() {
+        // Custom handler logic for table
+      },
+      // Add custom handler for formula
+      formula: function() {
+        // Custom handler logic for formula
       }
     }
   }
@@ -113,7 +131,8 @@ const formats = [
   'header', 'font', 'size',
   'bold', 'italic', 'underline', 'strike', 'blockquote',
   'list', 'bullet', 'indent',
-  'link', 'image', 'video', 'pdf' // Add 'pdf' here
+  'link', 'image', 'video', 'pdf', // Add 'pdf' here
+  'align', 'color', 'background', 'formula' // Add new formats here
 ];
 
 // Register custom PDF embed module
