@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Avatar, Button, Dropdown, Navbar, TextInput } from "flowbite-react";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaMoon, FaSun } from 'react-icons/fa';
@@ -18,6 +18,8 @@ export default function Header() {
     const location = useLocation(); // Add useLocation
     const [isSearchBoxVisible, setIsSearchBoxVisible] = useState(false); // Add state for search box visibility
     const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 640); // Add state for screen size
+    const [isSearchPopupVisible, setIsSearchPopupVisible] = useState(false); // Add state for search popup visibility
+    const searchPopupRef = useRef(null); // Add ref for search popup
 
     useEffect(() => {
         const urlParams = new URLSearchParams(location.search);
@@ -38,6 +40,38 @@ export default function Header() {
         };
     }, []);
 
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.ctrlKey && e.key === 'k') {
+                e.preventDefault();
+                setIsSearchPopupVisible(true);
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, []);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (searchPopupRef.current && !searchPopupRef.current.contains(event.target)) {
+                setIsSearchPopupVisible(false);
+            }
+        };
+
+        if (isSearchPopupVisible) {
+            document.addEventListener('mousedown', handleClickOutside);
+        } else {
+            document.removeEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [isSearchPopupVisible]);
+
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
     };
@@ -48,11 +82,20 @@ export default function Header() {
             setIsSearchBoxVisible(false);
         } else {
             navigate(`search/?searchTerm=${searchTerm}`);
+            setIsSearchPopupVisible(false); // Hide search popup after search
         }
     };
 
     const toggleSearchBox = () => {
         setIsSearchBoxVisible(!isSearchBoxVisible);
+    };
+
+    const handleSearchClick = () => {
+        setIsSearchPopupVisible(true);
+    };
+
+    const handleSearchClose = () => {
+        setIsSearchPopupVisible(false);
     };
 
     const handleSignout = async () => {
@@ -75,7 +118,7 @@ export default function Header() {
     const defaultProfilePicture = 'path/to/default/profile/picture.jpg';
 
     return (
-        <Navbar className='border-b-2 flex justify-between items-center p-4'>
+        <Navbar className='border-b-2 flex justify-between items-center p-1.5'>
             <Link to='/' className='self-center whitespace-nowrap text-sm sm:text-xl font-semibold'>
                 <span className='px-2 py-1 bg-gradient-to-r from-indigo-500 via-indigo-500 to-pink-500 rounded-lg text-white'>
                     Engineering
@@ -87,15 +130,44 @@ export default function Header() {
                     <form className='w-full' onSubmit={handleSearchSubmit}>
                         <TextInput
                             type="text"
-                            placeholder="Search..."
-                            className='w-full pr-10 text-sm py-1'
+                            placeholder="Search.."
+                            className='w-full text-sm py-1 px-2'
                             value={searchTerm}
                             onChange={handleSearchChange}
+                            onClick={handleSearchClick} // Add onClick handler
                         />
-                        
+                        <AiOutlineSearch 
+                            className='absolute right-3 top-1/2 transform -translate-y-1/2 text-white-500 cursor-pointer' 
+                            onClick={handleSearchSubmit} // Add onClick handler to perform search
+                        />
                     </form>
                 ) : (
                     <AiOutlineSearch className='text-gray-600 cursor-pointer sm:hidden text-2xl' onClick={toggleSearchBox} /> // Improved visibility
+                )}
+                {isSearchPopupVisible && (
+                    <div className='fixed inset-0 bg-black bg-opacity-80 backdrop-blur-sm flex justify-center items-center z-50'> {/* Add blur effect */}
+                        <div ref={searchPopupRef} className='bg-gray-700 p-10 rounded-lg shadow-xl w-11/12 sm:w-2/3 lg:w-1/2 h-96'> {/* Increase shadow size */}
+                            <form onSubmit={handleSearchSubmit} className='flex flex-col h-full'>
+                                <div className='relative w-full'>
+                                    <TextInput
+                                        type="text"
+                                        placeholder="Search..."
+                                        className='w-full pr-10 text-sm py-2 pl-10 ' // Increase padding and add left padding for icon
+                                        value={searchTerm}
+                                        onChange={handleSearchChange}
+                                    />
+                                    <AiOutlineSearch 
+                                        className='absolute right-12 top-1/2 transform -translate-y-1/2 text-white cursor-pointer' // Increase visibility
+                                        onClick={handleSearchSubmit} // Add onClick handler to perform search
+                                    />
+                                </div>
+                                
+                                <div className='mt-auto'>
+                                    <Button type="button" className='w-full' onClick={handleSearchClose}>Close</Button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 )}
             </div>
             <Navbar.Collapse>
