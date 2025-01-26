@@ -127,32 +127,34 @@ export default function Header() {
             </Link>
             <div className='flex-grow max-w-sm relative ml-4'> {/* Add margin-left */}
                 {isSearchBoxVisible || !isSmallScreen ? ( // Conditionally render based on state and screen size
-                    <form className='w-full' onSubmit={handleSearchSubmit}>
+                    <form className='w-full ' onSubmit={handleSearchSubmit}>
+                        
                         <TextInput
                             type="text"
                             placeholder="Search.."
-                            className='w-full text-sm py-1 px-2'
+                            className='w-full text-sm  py-1 px-2'
                             value={searchTerm}
                             onChange={handleSearchChange}
                             onClick={handleSearchClick} // Add onClick handler
                         />
-                        <AiOutlineSearch 
-                            className='absolute right-3 top-1/2 transform -translate-y-1/2 text-white-500 cursor-pointer' 
-                            onClick={handleSearchSubmit} // Add onClick handler to perform search
-                        />
+                        <span className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-gray-600 text-white text-xs px-2 py-0.5 rounded-md">
+                                           Ctrl + K
+                                        </span>
+                        
+                        
                     </form>
                 ) : (
                     <AiOutlineSearch className='text-gray-600 cursor-pointer sm:hidden text-2xl' onClick={toggleSearchBox} /> // Improved visibility
                 )}
                 {isSearchPopupVisible && (
                     <div className='fixed inset-0 bg-black bg-opacity-80 backdrop-blur-sm flex justify-center items-center z-50'> {/* Add blur effect */}
-                        <div ref={searchPopupRef} className='bg-gray-700 p-10 rounded-lg shadow-xl w-11/12 sm:w-2/3 lg:w-1/2 h-96'> {/* Increase shadow size */}
+                        <div ref={searchPopupRef} className='bg-gray-700 p-10 rounded-lg shadow-xl w-11/12 sm:w-2/3 lg:w-1/2 h-96 border-2 border-blue-500'> {/* Add gradient border */}
                             <form onSubmit={handleSearchSubmit} className='flex flex-col h-full'>
                                 <div className='relative w-full'>
                                     <TextInput
                                         type="text"
                                         placeholder="Search..."
-                                        className='w-full pr-10 text-sm py-2 pl-10 ' // Increase padding and add left padding for icon
+                                        className='w-full pr-10 text-sm py-2 pl-10 border-blue-700' // Add border color class
                                         value={searchTerm}
                                         onChange={handleSearchChange}
                                     />
@@ -162,8 +164,8 @@ export default function Header() {
                                     />
                                 </div>
                                 
-                                <div className='mt-auto'>
-                                    <Button type="button" className='w-full' onClick={handleSearchClose}>Close</Button>
+                                <div className='mt-auto flex justify-center'>
+                                    <Button gradientDuoTone='purpleToPink' type="button" className='w-text text-white-500 ' onClick={handleSearchClose}>Close</Button>
                                 </div>
                             </form>
                         </div>
