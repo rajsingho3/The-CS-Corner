@@ -24,6 +24,14 @@ const userSchema = new mongoose.Schema({
         type:Boolean,
         default: false,
     },
+    verificationCode:{
+        type: String,
+        required: false
+    },
+    isVerified:{
+        type: Boolean,
+        default: false
+    },
 },{timestamps: true}
 );
 

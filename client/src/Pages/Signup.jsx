@@ -1,22 +1,23 @@
 import { Alert, Button, Label, Spinner, TextInput } from 'flowbite-react';
-import React from 'react';
-import { Link, useNavigate} from 'react-router-dom';
-import { useState } from 'react';
-import { set } from 'mongoose';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import OAuth from '../components/OAuth';
-
+import OtpVerify from './OtpVerify'; // Import OtpVerify component
 
 export default function Signup() {
   const [formData, setFormData] = useState({});
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [showOtpVerify, setShowOtpVerify] = useState(false); // State to control OTP verification page
   const navigate = useNavigate();
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.id]: e.target.value.trim()
     });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.username || !formData.email || !formData.password) {
@@ -38,27 +39,29 @@ export default function Signup() {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(formData)
-      }); 
+      });
       const data = await res.json();
       if (data.success === false) {
-         return setErrorMessage(data.message);
-        
+        return setErrorMessage(data.message);
       }
       setLoading(false);
       if (res.ok) {
-        navigate('/signin');
-        
+        // Pass email to OTP component
+        localStorage.setItem('tempEmail', formData.email);
+        setShowOtpVerify(true);
       }
-      
     } catch (error) {
-      // Handle error here
       setErrorMessage(error.message);
       setLoading(false);
     }
+  };
+
+  if (showOtpVerify) {
+    return <OtpVerify email={formData.email} />; // Render OTP verification page
   }
 
   return (
-    <div className='min-h-screen mt-20'> 
+    <div className='min-h-screen mt-20'>
       <div className='flex p-3 max-w-3xl mx-auto flex-col md:flex-row md:items-center gap-7'>
         {/*left*/}
         <div className='flex-1'>
@@ -108,8 +111,8 @@ export default function Signup() {
               {
                 loading ? (
                   <>
-                  <Spinner size='sm'/>
-                  <span className='pl-3'>Loading...</span>
+                    <Spinner size='sm' />
+                    <span className='pl-3'>Loading...</span>
                   </>
                 ) : 'Sign up'
               }
