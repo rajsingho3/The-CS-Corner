@@ -1,5 +1,7 @@
 import { transporter } from "./email.config.js"; // Ensure the correct file extension is used
 
+console.log("Current directory:", __dirname); // Log the current directory
+
 export const SendVerificationCode= async (email, verficationCode) => {
     try {
          const response = await transporter.sendMail({
