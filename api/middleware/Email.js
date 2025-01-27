@@ -1,10 +1,6 @@
 
 import { transporter } from './email.config.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-console.log('Current directory:', __dirname);
 
 export const SendVerificationCode = async (email, verficationCode) => {
     try {
