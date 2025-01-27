@@ -1,8 +1,14 @@
-import { transporter } from "./email.config.js"; // Ensure the correct file extension is used
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import { transporter } from '../middleware/email.config.js';
 
-console.log("Current directory:", __dirname); // Log the current directory
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-export const SendVerificationCode= async (email, verficationCode) => {
+console.log('Current directory:', __dirname);
+
+export const SendVerificationCode = async (email, verficationCode) => {
     try {
          const response = await transporter.sendMail({
                     from: '"Engineering Reference" <engineeringreference7@gmail.com>', // sender address
