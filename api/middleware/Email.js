@@ -1,4 +1,4 @@
-import { transporter } from "./email.config";
+import { transporter } from "./email.config.js"; // Ensure the correct file extension is used
 
 export const SendVerificationCode= async (email, verficationCode) => {
     try {
