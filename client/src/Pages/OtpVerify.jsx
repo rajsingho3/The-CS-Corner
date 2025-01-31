@@ -36,7 +36,7 @@ function OtpVerify({ email }) {
 
       const data = await response.json();
       localStorage.removeItem('tempEmail'); // Clean up
-      navigate('/');
+      navigate('/signin');
       
     } catch (error) {
       setErrorMessage(error.message);

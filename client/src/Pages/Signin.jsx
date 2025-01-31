@@ -66,9 +66,10 @@ export default function Signin() {
             Reference
           </Link>
           <p className='text-sm mt-5'>
-            This is a blog page for engineers to share their knowledge and experience. <br />
-            You can also find useful resources and tools here. <br />
-            You can signin with your email and password or with Google. <br />
+          Welcome to Engineering Reference – a platform where engineers collaborate,
+           share knowledge, and grow together!. <br />
+           🚀 Get access to curated study materials, 🔧 tools, and 📜   past papers to level up your engineering journey! <br />
+            🔐 Access exclusive content by signing in with your email or Google account! <br />
           </p>
         </div>
         {/*right*/}
