@@ -3,7 +3,9 @@
       {
         "src": "client/package.json",
         "use": "@vercel/static-build",
-        "config": { "outputDirectory": "client/dist" }
+        "config": {
+          "outputDirectory": "dist" 
+        }
       }
     ]
   }
