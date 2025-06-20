@@ -6,6 +6,7 @@ import Signup from './Pages/Signup'
 import Dashboard from './Pages/Dashboard.jsx'
 import About from './Pages/About.jsx'
 import Project from './Pages/Project.jsx'
+import OtpVerify from './Pages/OtpVerify.jsx'
 import Header from './components/Header.jsx'
 import Footer from './components/Footer.jsx'
 import PrivateRoute from './components/PrivateRoute'
@@ -23,11 +24,11 @@ export default function App() {
       <ThemeProvider>
         <div className="min-h-screen bg-slate-900">
           <ScrollToTop/>
-          <Header />
-          <Routes>
+          <Header />          <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/signin" element={<Signin />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/otp-verify" element={<OtpVerify />} />
             <Route path="/search" element={<Search />} />        
             <Route element={<PrivateRoute />}>
               <Route path="/dashboard" element={<Dashboard />} />
@@ -39,6 +40,7 @@ export default function App() {
             <Route path="/about" element={<About />} />
             <Route path="/project" element={<Project />} />
             <Route path="/post/:postSlug" element={<PostPage />} />
+            <Route path="/otp-verify" element={<OtpVerify />} />
           </Routes>
           <Footer />
         </div>
