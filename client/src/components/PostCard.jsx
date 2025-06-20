@@ -2,23 +2,37 @@ import { Link } from 'react-router-dom';
 
 export default function PostCard({ post }) {
   return (
-    <div className='group relative border border-teal-500 hover:border-2 h-[400px] overflow-hidden rounded-lg sm:w-[400px] transition-all flex flex-col'>
+    <div className='group relative bg-gradient-to-br from-slate-800 to-slate-700 hover:from-slate-700 hover:to-slate-600 rounded-2xl overflow-hidden transition-all duration-300 transform hover:scale-105 shadow-xl border border-slate-600 h-[420px]'>
       <Link to={`/post/${post.slug}`}>
-        <img
-          src={post.image}
-          alt='post cover'
-          className='h-[260px] object-cover group-hover:h-[200px] transition-all duration-300 z-20'
-        />
+        <div className="relative overflow-hidden h-48">
+          <img
+            src={post.image}
+            alt='post cover'
+            className='w-full h-full object-cover transition-transform duration-300 group-hover:scale-110'
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-800/50 to-transparent"></div>
+        </div>
       </Link>
-      <div className='p-3 flex flex-col gap-2 flex-grow'>
-        <p className='text-lg font-semibold line-clamp-2'>{post.title}</p>
-        <span className='italic text-sm'>{post.category}</span>
-        <Link
-          to={`/post/${post.slug}`}
-          className='z-10 group-hover:bottom-0 absolute bottom-[-200px] left-0 right-0 border border-teal-500 text-teal-500 hover:bg-teal-500 hover:text-white transition-all duration-300 text-center py-2 rounded-md !rounded-tl-none m-2'
-        >
-          Read article
-        </Link>
+      <div className='p-6 flex flex-col justify-between h-[220px]'>
+        <div>
+          <h3 className='text-xl font-bold text-white mb-3 line-clamp-2 group-hover:text-purple-300 transition-colors duration-300'>
+            {post.title}
+          </h3>
+          <span className='inline-block px-3 py-1 bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-purple-300 text-sm rounded-full border border-purple-500/30 mb-4'>
+            {post.category}
+          </span>
+        </div>
+        <div className="space-y-3">
+          <div className="text-gray-400 text-sm">
+            uncategorized
+          </div>
+          <Link
+            to={`/post/${post.slug}`}
+            className='block w-full bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 text-center transform group-hover:scale-105'
+          >
+            Read article
+          </Link>
+        </div>
       </div>
     </div>
   );

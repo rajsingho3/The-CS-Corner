@@ -115,114 +115,151 @@ export default function Header() {
         }
     };
 
-    const defaultProfilePicture = 'path/to/default/profile/picture.jpg';
-
-    return (
-        <Navbar className='border-b-2 flex justify-between items-center p-1.5'>
-            <Link to='/' className='self-center whitespace-nowrap text-sm sm:text-xl font-semibold'>
-                <span className='px-2 py-1 bg-gradient-to-r from-indigo-500 via-indigo-500 to-pink-500 rounded-lg text-white'>
-                    Engineering
-                </span>
-                Reference
-            </Link>
-            <div className='flex-grow max-w-sm relative ml-4'> {/* Add margin-left */}
-                {isSearchBoxVisible || !isSmallScreen ? ( // Conditionally render based on state and screen size
-                    <form className='w-full ' onSubmit={handleSearchSubmit}>
-                        
-                        <TextInput
-                            type="text"
-                            placeholder="Search.."
-                            className='w-full text-sm  py-1 px-2'
-                            value={searchTerm}
-                            onChange={handleSearchChange}
-                            onClick={handleSearchClick} // Add onClick handler
-                        />
-                        <span className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-gray-600 text-white text-xs px-2 py-0.5 rounded-md">
-                                           Ctrl + K
-                                        </span>
-                        
-                        
-                    </form>
-                ) : (
-                    <AiOutlineSearch className='text-gray-600 cursor-pointer sm:hidden text-2xl' onClick={toggleSearchBox} /> // Improved visibility
-                )}
-                {isSearchPopupVisible && (
-                    <div className='fixed inset-0 bg-black bg-opacity-80 backdrop-blur-sm flex justify-center items-center z-50'> {/* Add blur effect */}
-                        <div ref={searchPopupRef} className='bg-gray-700 p-10 rounded-lg shadow-xl w-11/12 sm:w-2/3 lg:w-1/2 h-96 border-2 border-blue-500'> {/* Add gradient border */}
-                            <form onSubmit={handleSearchSubmit} className='flex flex-col h-full'>
-                                <div className='relative w-full'>
-                                    <TextInput
-                                        type="text"
-                                        placeholder="Search..."
-                                        className='w-full pr-10 text-sm py-2 pl-10 border-blue-700' // Add border color class
-                                        value={searchTerm}
-                                        onChange={handleSearchChange}
-                                    />
-                                    <AiOutlineSearch 
-                                        className='absolute right-12 top-1/2 transform -translate-y-1/2 text-white cursor-pointer' // Increase visibility
-                                        onClick={handleSearchSubmit} // Add onClick handler to perform search
-                                    />
-                                </div>
-                                
-                                <div className='mt-auto flex justify-center'>
-                                    <Button gradientDuoTone='purpleToPink' type="button" className='w-text text-white-500 ' onClick={handleSearchClose}>Close</Button>
-                                </div>
-                            </form>
+    const defaultProfilePicture = 'path/to/default/profile/picture.jpg';    return (
+        <Navbar className='bg-slate-900/95 backdrop-blur-sm border-b border-slate-700 sticky top-0 z-50'>
+            <div className="flex justify-between items-center w-full px-4">
+                <Link to='/' className='flex items-center gap-2 font-bold text-xl'>
+                    <div className='flex items-center gap-1'>
+                        <div className='w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center'>
+                            <span className='text-white font-bold text-sm'>ER</span>
                         </div>
+                        <span className='text-white hidden sm:block'>Engineering</span>
+                        <span className='bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent hidden sm:block'>Reference</span>
                     </div>
-                )}
+                </Link>
+                
+                <div className='flex-grow max-w-md mx-8 hidden md:block'>
+                    {isSearchBoxVisible || !isSmallScreen ? (
+                        <form className='relative' onSubmit={handleSearchSubmit}>
+                            <TextInput
+                                type="text"
+                                placeholder="Search articles..."
+                                className='w-full bg-slate-800 border-slate-600 text-white placeholder-gray-400 focus:border-purple-500'
+                                value={searchTerm}
+                                onChange={handleSearchChange}
+                                onClick={handleSearchClick}
+                            />
+                            <span className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-slate-700 text-gray-300 text-xs px-2 py-1 rounded border border-slate-600">
+                                Ctrl + K
+                            </span>
+                        </form>
+                    ) : (
+                        <button onClick={toggleSearchBox} className='p-2 text-gray-400 hover:text-white transition-colors'>
+                            <AiOutlineSearch className='text-xl' />
+                        </button>
+                    )}
+                    {isSearchPopupVisible && (
+                        <div className='fixed inset-0 bg-black/80 backdrop-blur-sm flex justify-center items-center z-50'>
+                            <div ref={searchPopupRef} className='bg-slate-800 p-8 rounded-2xl shadow-2xl w-11/12 sm:w-2/3 lg:w-1/2 max-w-2xl border border-slate-600'>
+                                <form onSubmit={handleSearchSubmit} className='space-y-6'>
+                                    <div className='relative'>
+                                        <AiOutlineSearch className='absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl' />
+                                        <TextInput
+                                            type="text"
+                                            placeholder="Search articles..."
+                                            className='w-full pl-12 bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-purple-500 text-lg py-3'
+                                            value={searchTerm}
+                                            onChange={handleSearchChange}
+                                            autoFocus
+                                        />
+                                    </div>
+                                    <div className='flex justify-end gap-3'>
+                                        <button 
+                                            type="button" 
+                                            onClick={handleSearchClose}
+                                            className='px-4 py-2 text-gray-400 hover:text-white transition-colors'
+                                        >
+                                            Cancel
+                                        </button>
+                                        <button 
+                                            type="submit"
+                                            className='px-6 py-2 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-lg hover:from-purple-600 hover:to-pink-700 transition-all'
+                                        >
+                                            Search
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    )}
+                </div>
+
+                <div className='flex items-center gap-4'>
+                    <div className='hidden md:flex items-center gap-6'>
+                        <Link to='/' className={`text-sm font-medium transition-colors ${path === '/' ? 'text-purple-400' : 'text-gray-300 hover:text-white'}`}>
+                            Home
+                        </Link>
+                        <Link to='/about' className={`text-sm font-medium transition-colors ${path === '/about' ? 'text-purple-400' : 'text-gray-300 hover:text-white'}`}>
+                            About
+                        </Link>
+                        <Link to='/project' className={`text-sm font-medium transition-colors ${path === '/project' ? 'text-purple-400' : 'text-gray-300 hover:text-white'}`}>
+                            Project
+                        </Link>
+                    </div>
+
+                    <button 
+                        onClick={() => dispatch(toggleTheme())}
+                        className='p-2 text-gray-400 hover:text-white transition-colors rounded-lg hover:bg-slate-800'
+                    >
+                        {theme === 'light' ? <FaSun className="text-lg" /> : <FaMoon className="text-lg" />}
+                    </button>
+
+                    {currentUser ? (
+                        <Dropdown arrowIcon={false} inline label={
+                            <Avatar
+                                alt='User'
+                                img={currentUser.profilePicture || defaultProfilePicture} 
+                                rounded
+                                className="ring-2 ring-purple-500"
+                            />
+                        }>
+                            <Dropdown.Header>
+                                <span className='block text-sm font-medium'>{currentUser.username}</span>
+                                <span className='block text-sm text-gray-500 truncate'>{currentUser.email}</span>
+                            </Dropdown.Header>
+                            <Link to={'/dashboard?tab=profile'}>
+                                <Dropdown.Item>
+                                    Profile
+                                </Dropdown.Item>
+                            </Link>
+                            <Dropdown.Divider />
+                            <Dropdown.Item onClick={handleSignout}>
+                                Sign out
+                            </Dropdown.Item>
+                        </Dropdown>
+                    ) : (
+                        <Link to='/signin'>
+                            <button className='bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white font-medium py-2 px-6 rounded-full transition-all duration-300 transform hover:scale-105'>
+                                Sign in
+                            </button>
+                        </Link>
+                    )}
+                    
+                    <button className='md:hidden p-2 text-gray-400 hover:text-white'>
+                        <Navbar.Toggle />
+                    </button>
+                </div>
             </div>
-            <Navbar.Collapse>
-                <Navbar.Link className={path === '/' ? 'text-blue-500' : ''} as={'div'}>
-                    <Link to='/'>
+            
+            <Navbar.Collapse className="md:hidden bg-slate-800 border-t border-slate-700 mt-2">
+                <div className="flex flex-col gap-2 p-4">
+                    <Link to='/' className={`p-2 rounded transition-colors ${path === '/' ? 'text-purple-400 bg-slate-700' : 'text-gray-300 hover:text-white hover:bg-slate-700'}`}>
                         Home
                     </Link>
-                </Navbar.Link>
-                <Navbar.Link className={path === '/about' ? 'text-blue-500' : ''} as={'div'}>
-                    <Link to='/about'>
+                    <Link to='/about' className={`p-2 rounded transition-colors ${path === '/about' ? 'text-purple-400 bg-slate-700' : 'text-gray-300 hover:text-white hover:bg-slate-700'}`}>
                         About
                     </Link>
-                </Navbar.Link>
-                <Navbar.Link className={path === '/project' ? 'text-blue-500' : ''} as={'div'}>
-                    <Link to='/project'>
+                    <Link to='/project' className={`p-2 rounded transition-colors ${path === '/project' ? 'text-purple-400 bg-slate-700' : 'text-gray-300 hover:text-white hover:bg-slate-700'}`}>
                         Project
                     </Link>
-                </Navbar.Link>
+                    <div className='mt-4 md:hidden'>
+                        <button onClick={toggleSearchBox} className='w-full p-3 bg-slate-700 text-gray-300 rounded-lg flex items-center gap-3'>
+                            <AiOutlineSearch />
+                            <span>Search articles...</span>
+                        </button>
+                    </div>
+                </div>
             </Navbar.Collapse>
-            <div className='flex items-center gap-1'> {/* Reduced gap from 2 to 1 */}
-                {!isSmallScreen && ( // Hide dark mode button on small screens
-                    <Button className='w-12 h-10 flex justify-center items-center' color='gray' pill size='sm' onClick={() => dispatch(toggleTheme())}>
-                        {theme === 'light' ? <FaSun /> : <FaMoon />}
-                    </Button>
-                )}
-                {currentUser ? (
-                    <Dropdown arrowIcon={false} inline label={<Avatar
-                        alt='User'
-                        img={currentUser.profilePicture || defaultProfilePicture} rounded
-                    />}>
-                        <Dropdown.Header>
-                            <span className='block text-sm'>{currentUser.username}</span>
-                            <span className='block text-sm font-medium truncate'>{currentUser.email}</span>
-                        </Dropdown.Header>
-                        <Link to={'/dashboard?tab=profile'}>
-                            <Dropdown.Item>
-                                Profile
-                            </Dropdown.Item>
-                        </Link>
-                        <Dropdown.Divider />
-                        <Dropdown.Item onClick={handleSignout}>
-                            Sign out
-                        </Dropdown.Item>
-                    </Dropdown>
-                ) : (
-                    <Link to='/signin'>
-                        <Button gradientDuoTone='purpleToPink' outline>
-                            Sign in
-                        </Button>
-                    </Link>
-                )}
-                <Navbar.Toggle />
-            </div>
         </Navbar>
     )
 }
