@@ -17,21 +17,26 @@ export default function Dashboard() {
     if (tabFromUrl) {
       setTab(tabFromUrl);
     }
-  }, [location.search]);
-  return (
-    <div className='min-h-screen flex flex-col md:flex-row'>
-      <div className='md:w-56'>
+  }, [location.search]);  return (
+    <div className='min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900'>
+      <div className='flex'>
         {/* Sidebar */}
-        <DashSidebar />
+        <div className='hidden md:block md:w-64 min-h-screen sticky top-0'>
+          <DashSidebar />
+        </div>
+        
+        {/* Main Content */}
+        <div className='flex-1 min-h-screen'>
+          {/* profile... */}
+          {tab === 'profile' && <DashProfile />}
+          {/* posts... */}
+          {tab === 'posts' && <DashPosts />}
+          {/* dashboard comp */}
+          {tab === 'dash' && <DashboardComp />}
+          {/* Default to profile if no tab */}
+          {!tab && <DashProfile />}
+        </div>
       </div>
-      {/* profile... */}
-      {tab === 'profile' && <DashProfile />}
-      {/* posts... */}
-      {tab === 'posts' && <DashPosts />}
-      
-      
-      {/* dashboard comp */}
-      {tab === 'dash' && <DashboardComp />}
     </div>
   );
 }
