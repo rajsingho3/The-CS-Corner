@@ -6,6 +6,7 @@ import DashProfile from '../components/DashProfile';
 import DashboardComp from '../components/DashboardComp';
 import DashPosts from '../components/DashPosts';
 import DashComments from '../components/DashComments';
+import DashPYQs from '../components/DashPYQs';
 
 export default function Dashboard() {
   const location = useLocation();
@@ -20,23 +21,21 @@ export default function Dashboard() {
       setTab(tabFromUrl);
     }
   }, [location.search]);
-
   const getPageTitle = () => {
     switch (tab) {
       case 'profile': return 'Profile Settings';
       case 'posts': return 'Manage Posts';
       case 'dash': return 'Dashboard Overview';
-      case 'comments': return 'Comments';
+      case 'comments': return 'Comments';      case 'pyqs': return 'Manage PYQs';
       default: return 'Profile Settings';
     }
   };
-
   const getPageDescription = () => {
     switch (tab) {
       case 'profile': return 'Update your profile information and preferences';
       case 'posts': return 'Create, edit, and manage your published articles';
       case 'dash': return 'View your content statistics and analytics';
-      case 'comments': return 'Moderate and respond to comments';
+      case 'comments': return 'Moderate and respond to comments';      case 'pyqs': return 'Manage and oversee all PYQ papers in the system';
       default: return 'Update your profile information and preferences';
     }
   };
@@ -106,12 +105,12 @@ export default function Dashboard() {
 
           {/* Page Content */}
           <main className='p-6'>
-            <div className='max-w-7xl mx-auto'>
-              {/* Content based on active tab */}
+            <div className='max-w-7xl mx-auto'>              {/* Content based on active tab */}
               {tab === 'profile' && <DashProfile />}
               {tab === 'posts' && <DashPosts />}
               {tab === 'dash' && <DashboardComp />}
               {tab === 'comments' && <DashComments />}
+              {tab === 'pyqs' && currentUser?.isAdmin && <DashPYQs />}
               {!tab && <DashProfile />}
             </div>
           </main>

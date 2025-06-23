@@ -15,7 +15,10 @@ import CreatePost from './Pages/CreatePost'
 import UpdatePost from './Pages/UpdatePost'
 import PostPage from './Pages/PostPage'
 import ScrollToTop from './components/ScrollToTop'
-import Search from './Pages/Search' 
+import Search from './Pages/Search'
+import CreatePYQ from './Pages/CreatePYQ'
+import UpdatePYQ from './Pages/UpdatePYQ'
+import PYQBrowser from './Pages/PYQBrowser'
 import ThemeProvider from './components/ThemeProvider'
 
 export default function App() {
@@ -29,13 +32,15 @@ export default function App() {
             <Route path="/signin" element={<Signin />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/otp-verify" element={<OtpVerify />} />
-            <Route path="/search" element={<Search />} />        
-            <Route element={<PrivateRoute />}>
+            <Route path="/search" element={<Search />} />            <Route element={<PrivateRoute />}>
               <Route path="/dashboard" element={<Dashboard />} />
             </Route>
+            <Route path="/pyq-browser" element={<PYQBrowser />} />
             <Route element={<OnlyAdminPrivateRoute />}>
               <Route path="/create-post" element={<CreatePost />} />
               <Route path="/update-post/:postId" element={<UpdatePost />} />
+              <Route path="/create-pyq" element={<CreatePYQ />} />
+              <Route path="/update-pyq/:pyqId" element={<UpdatePYQ />} />
             </Route>
             <Route path="/about" element={<About />} />
             <Route path="/project" element={<Project />} />

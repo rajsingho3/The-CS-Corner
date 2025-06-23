@@ -5,6 +5,7 @@ import {
   HiOutlineUserGroup,
   HiAnnotation,
   HiChartPie,
+  HiAcademicCap,
 } from 'react-icons/hi';
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -57,17 +58,34 @@ export default function DashSidebar() {
       label: 'Profile',
       badge: currentUser?.isAdmin ? 'Admin' : 'User',
       isActive: tab === 'profile'
-    },
-    ...(currentUser?.isAdmin ? [{
+    },    ...(currentUser?.isAdmin ? [{
       to: '/dashboard?tab=posts',
       icon: HiDocumentText,
       label: 'Posts',
       isActive: tab === 'posts'
     }] : []),
     ...(currentUser?.isAdmin ? [{
+      to: '/dashboard?tab=pyqs',
+      icon: HiAcademicCap,
+      label: 'Manage PYQs',
+      isActive: tab === 'pyqs'
+    }] : []),
+    {
+      to: '/pyq-browser',
+      icon: HiDocumentText,
+      label: 'Browse PYQs',
+      isActive: false
+    },
+    ...(currentUser?.isAdmin ? [{
       to: '/create-post',
       icon: HiAnnotation,
       label: 'Write Article',
+      isActive: false
+    }] : []),
+    ...(currentUser?.isAdmin ? [{
+      to: '/create-pyq',
+      icon: HiAcademicCap,
+      label: 'Upload PYQ',
       isActive: false
     }] : [])
   ];  return (

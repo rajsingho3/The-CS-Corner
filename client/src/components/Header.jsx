@@ -195,13 +195,15 @@ export default function Header() {
                     )}
                 </div>
 
-                <div className='flex items-center gap-4'>
-                    <div className='hidden md:flex items-center gap-6'>
+                <div className='flex items-center gap-4'>                    <div className='hidden md:flex items-center gap-6'>
                         <Link to='/' className={`text-sm font-medium transition-colors ${path === '/' ? 'text-purple-400' : 'text-gray-300 hover:text-white'}`}>
                             Home
                         </Link>
                         <Link to='/about' className={`text-sm font-medium transition-colors ${path === '/about' ? 'text-purple-400' : 'text-gray-300 hover:text-white'}`}>
                             About
+                        </Link>
+                        <Link to='/pyq-browser' className={`text-sm font-medium transition-colors ${path === '/pyq-browser' ? 'text-purple-400' : 'text-gray-300 hover:text-white'}`}>
+                            PYQ Papers
                         </Link>
                         <Link to='/project' className={`text-sm font-medium transition-colors ${path === '/project' ? 'text-purple-400' : 'text-gray-300 hover:text-white'}`}>
                             Project
@@ -294,13 +296,15 @@ export default function Header() {
                 </div>
             </div>
             
-            <Navbar.Collapse className="md:hidden bg-slate-800 border-t border-slate-700 mt-2">
-                <div className="flex flex-col gap-2 p-4">
+            <Navbar.Collapse className="md:hidden bg-slate-800 border-t border-slate-700 mt-2">                <div className="flex flex-col gap-2 p-4">
                     <Link to='/' className={`p-2 rounded transition-colors ${path === '/' ? 'text-purple-400 bg-slate-700' : 'text-gray-300 hover:text-white hover:bg-slate-700'}`}>
                         Home
                     </Link>
                     <Link to='/about' className={`p-2 rounded transition-colors ${path === '/about' ? 'text-purple-400 bg-slate-700' : 'text-gray-300 hover:text-white hover:bg-slate-700'}`}>
                         About
+                    </Link>
+                    <Link to='/pyq-browser' className={`p-2 rounded transition-colors ${path === '/pyq-browser' ? 'text-purple-400 bg-slate-700' : 'text-gray-300 hover:text-white hover:bg-slate-700'}`}>
+                        PYQ Papers
                     </Link>
                     <Link to='/project' className={`p-2 rounded transition-colors ${path === '/project' ? 'text-purple-400 bg-slate-700' : 'text-gray-300 hover:text-white hover:bg-slate-700'}`}>
                         Project

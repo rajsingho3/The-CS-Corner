@@ -60,12 +60,75 @@ export default function Home() {
         >
           View all posts
         </Link>
-      </div>
-
-      {/* Call to Action Section */}
+      </div>      {/* Call to Action Section */}
       <div className='py-16 px-6'>
         <CallToAction />
-      </div>      {/* Recent Posts Section */}
+      </div>
+
+      {/* PYQ Papers Section */}
+      <div className='max-w-7xl mx-auto px-6 py-16'>
+        <div className='text-center mb-12'>
+          <h2 className='text-3xl md:text-4xl font-bold text-white mb-4'>
+            Previous Year <span className='bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent'>Question Papers</span>
+          </h2>
+          <p className='text-gray-300 text-lg max-w-3xl mx-auto'>
+            Access a comprehensive collection of previous year question papers organized by course, semester, and year.
+          </p>
+        </div>
+        
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12'>
+          <div className='bg-gradient-to-br from-slate-800 to-slate-700 p-8 rounded-3xl shadow-2xl border border-slate-600 hover:border-purple-500/50 transition-all duration-300 transform hover:scale-105'>
+            <div className='text-center'>
+              <div className='bg-gradient-to-r from-purple-500 to-pink-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6'>
+                <svg className='w-8 h-8 text-white' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                  <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253' />
+                </svg>
+              </div>
+              <h3 className='text-xl font-bold text-white mb-4'>Organized by Semester</h3>
+              <p className='text-gray-300'>
+                Find papers organized by semester and year for easy navigation and study planning.
+              </p>
+            </div>
+          </div>
+          
+          <div className='bg-gradient-to-br from-slate-800 to-slate-700 p-8 rounded-3xl shadow-2xl border border-slate-600 hover:border-purple-500/50 transition-all duration-300 transform hover:scale-105'>
+            <div className='text-center'>
+              <div className='bg-gradient-to-r from-blue-500 to-cyan-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6'>
+                <svg className='w-8 h-8 text-white' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                  <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z' />
+                </svg>
+              </div>
+              <h3 className='text-xl font-bold text-white mb-4'>Multiple Formats</h3>
+              <p className='text-gray-300'>
+                Access papers in various formats including PDF, DOC, and image files for convenience.
+              </p>
+            </div>
+          </div>
+          
+          <div className='bg-gradient-to-br from-slate-800 to-slate-700 p-8 rounded-3xl shadow-2xl border border-slate-600 hover:border-purple-500/50 transition-all duration-300 transform hover:scale-105'>
+            <div className='text-center'>
+              <div className='bg-gradient-to-r from-green-500 to-emerald-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6'>
+                <svg className='w-8 h-8 text-white' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                  <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z' />
+                </svg>
+              </div>
+              <h3 className='text-xl font-bold text-white mb-4'>Verified Content</h3>
+              <p className='text-gray-300'>
+                All papers are verified and approved by our team to ensure quality and authenticity.
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <div className='text-center'>
+          <Link
+            to='/pyq-browser'
+            className='bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white font-semibold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg'
+          >
+            Browse PYQ Papers
+          </Link>
+        </div>
+      </div>{/* Recent Posts Section */}
       <div className='max-w-7xl mx-auto px-6 py-16'>
         {loading ? (
           <div className="text-center">

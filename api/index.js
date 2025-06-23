@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import userRoutes from "./routes/user.route.js";
 import authRoutes from "./routes/auth.route.js";
 import postRoutes from "./routes/postroute.js";
+import pyqRoutes from "./routes/pyq.route.js";
 import cookieParser from "cookie-parser";
 import path from "path";
 
@@ -30,6 +31,7 @@ app.listen(3000, () => {
 app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/post', postRoutes);
+app.use('/api/pyq', pyqRoutes);
 
 app.use(express.static(path.join(__dirname, "/client/dist")));
 
