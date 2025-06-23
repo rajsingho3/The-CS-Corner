@@ -377,9 +377,7 @@ export default function DashProfile() {
                       onChange={handleChange}
                       className='w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-xl text-black font-medium placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300'
                     />
-                  </div>
-
-                  <div className='flex flex-col sm:flex-row gap-4 pt-6'>
+                  </div>                  <div className='flex flex-col sm:flex-row gap-4 pt-6'>
                     <button
                       type='submit' 
                       disabled={imageFileUploading}
@@ -387,14 +385,32 @@ export default function DashProfile() {
                     >
                       {imageFileUploading ? 'Uploading...' : 'Update Profile'}
                     </button>                    {currentUser?.isAdmin && (
-                      <Link to={'/create-post'} className='flex-1'>
-                        <button
-                          type='button'
-                          className='w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg'
-                        >
-                          Create Article
-                        </button>
-                      </Link>
+                      <div className='flex flex-col sm:flex-row gap-3 flex-1'>
+                        <Link to={'/create-post'} className='flex-1'>
+                          <button
+                            type='button'
+                            className='w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg'
+                          >
+                            Create Article
+                          </button>
+                        </Link>
+                        <Link to={'/dashboard?tab=posts'} className='flex-1'>
+                          <button
+                            type='button'
+                            className='w-full bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg'
+                          >
+                            Manage Posts
+                          </button>
+                        </Link>
+                        <Link to={'/dashboard?tab=pyqs'} className='flex-1'>
+                          <button
+                            type='button'
+                            className='w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg'
+                          >
+                            Manage PYQs
+                          </button>
+                        </Link>
+                      </div>
                     )}
                   </div>
                 </form>
