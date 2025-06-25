@@ -55,13 +55,17 @@ export default function Header() {
                 e.preventDefault();
                 setIsSearchPopupVisible(true);
             }
+            if (e.key === 'Escape' && isSearchPopupVisible) {
+                e.preventDefault();
+                setIsSearchPopupVisible(false);
+            }
         };
 
         window.addEventListener('keydown', handleKeyDown);
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
         };
-    }, []);
+    }, [isSearchPopupVisible]);
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -127,72 +131,41 @@ export default function Header() {
     const defaultProfilePicture = 'path/to/default/profile/picture.jpg';
     
     return (
-        <Navbar className='bg-slate-900/95 backdrop-blur-sm border-b border-slate-700 sticky top-0 z-50'>
-            <div className="flex justify-between items-center w-full px-4">
-                <Link to='/' className='flex items-center gap-2 font-bold text-xl'>
-                    <div className='flex items-center gap-1'>
-                        <div className='w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center'>
-                            <span className='text-white font-bold text-sm'>ER</span>
-                        </div>
-                        <span className='text-white hidden sm:block'>Engineering</span>
-                        <span className='bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent hidden sm:block'>Reference</span>
-                    </div>
-                </Link>
-                
-                <div className='flex-grow max-w-md mx-8 hidden md:block'>
-                    {isSearchBoxVisible || !isSmallScreen ? (
-                        <form className='relative' onSubmit={handleSearchSubmit}>
-                            <TextInput
-                                type="text"
-                                placeholder="Search articles..."
-                                className='w-full bg-slate-800 border-slate-600 text-white placeholder-gray-400 focus:border-purple-500'
-                                value={searchTerm}
-                                onChange={handleSearchChange}
-                                onClick={handleSearchClick}
-                            />
-                            <span className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-slate-700 text-gray-300 text-xs px-2 py-1 rounded border border-slate-600">
-                                Ctrl + K
-                            </span>
-                        </form>
-                    ) : (
-                        <button onClick={toggleSearchBox} className='p-2 text-gray-400 hover:text-white transition-colors'>
-                            <AiOutlineSearch className='text-xl' />
-                        </button>
-                    )}
-                    {isSearchPopupVisible && (
-                        <div className='fixed inset-0 bg-black/80 backdrop-blur-sm flex justify-center items-center z-50'>
-                            <div ref={searchPopupRef} className='bg-slate-800 p-8 rounded-2xl shadow-2xl w-11/12 sm:w-2/3 lg:w-1/2 max-w-2xl border border-slate-600'>
-                                <form onSubmit={handleSearchSubmit} className='space-y-6'>
-                                    <div className='relative'>
-                                        <AiOutlineSearch className='absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl' />
-                                        <TextInput
-                                            type="text"
-                                            placeholder="Search articles..."
-                                            className='w-full pl-12 bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-purple-500 text-lg py-3'
-                                            value={searchTerm}
-                                            onChange={handleSearchChange}
-                                            autoFocus
-                                        />
-                                    </div>
-                                    <div className='flex justify-end gap-3'>
-                                        <button 
-                                            type="button" 
-                                            onClick={handleSearchClose}
-                                            className='px-4 py-2 text-gray-400 hover:text-white transition-colors'
-                                        >
-                                            Cancel
-                                        </button>
-                                        <button 
-                                            type="submit"
-                                            className='px-6 py-2 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-lg hover:from-purple-600 hover:to-pink-700 transition-all'
-                                        >
-                                            Search
-                                        </button>
-                                    </div>
-                                </form>
+        <>
+            <Navbar className='bg-slate-900/95 backdrop-blur-sm border-b border-slate-700 sticky top-0 z-50'>
+                <div className="flex justify-between items-center w-full px-4">
+                    <Link to='/' className='flex items-center gap-2 font-bold text-xl'>
+                        <div className='flex items-center gap-1'>
+                            <div className='w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center'>
+                                <span className='text-white font-bold text-sm'>ER</span>
                             </div>
+                            <span className='text-white'>Engineering</span>
+                            <span className='bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent'>Reference</span>
                         </div>
-                    )}
+                    </Link>
+                
+                {/* Desktop Search Box */}
+                <div className='flex-grow max-w-md mx-8 hidden md:block'>
+                    <form className='relative' onSubmit={handleSearchSubmit}>
+                        <TextInput
+                            type="text"
+                            placeholder="Search articles..."
+                            className='w-full bg-slate-800 border-slate-600 text-white placeholder-gray-400 focus:border-purple-500'
+                            value={searchTerm}
+                            onChange={handleSearchChange}
+                            onClick={handleSearchClick}
+                        />
+                        <span className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-slate-700 text-gray-300 text-xs px-2 py-1 rounded border border-slate-600">
+                            Ctrl + K
+                        </span>
+                    </form>
+                </div>
+
+                {/* Mobile Search Icon */}
+                <div className='md:hidden'>
+                    <button onClick={handleSearchClick} className='p-2 text-gray-400 hover:text-white transition-colors'>
+                        <AiOutlineSearch className='text-xl' />
+                    </button>
                 </div>
 
                 <div className='flex items-center gap-4'>                    <div className='hidden md:flex items-center gap-6'>
@@ -210,11 +183,7 @@ export default function Header() {
                         </Link>
                     </div>
 
-                    <button 
-                        onClick={() => dispatch(toggleTheme())}
-                        className='p-2 text-gray-400 hover:text-white transition-colors rounded-lg hover:bg-slate-800'                    >
-                        {theme === 'light' ? <FaSun className="text-lg" /> : <FaMoon className="text-lg" />}
-                    </button>
+                  
                     
                     {currentUser ? (
                         <Dropdown arrowIcon={false} inline label={
@@ -309,11 +278,6 @@ export default function Header() {
                     <Link to='/project' className={`p-2 rounded transition-colors ${path === '/project' ? 'text-purple-400 bg-slate-700' : 'text-gray-300 hover:text-white hover:bg-slate-700'}`}>
                         Project
                     </Link>
-                    <div className='mt-4 md:hidden'>
-                        <button onClick={toggleSearchBox} className='w-full p-3 bg-slate-700 text-gray-300 rounded-lg flex items-center gap-3'>
-                            <AiOutlineSearch />                            <span>Search articles...</span>
-                        </button>
-                    </div>
                 </div>
             </Navbar.Collapse>
             
@@ -366,7 +330,150 @@ export default function Header() {
                 .flowbite-dropdown {
                     animation: dropdownSlide 0.2s ease-out !important;
                 }
+                
+                @keyframes searchPopupIn {
+                    from {
+                        opacity: 0;
+                        transform: scale(0.9) translateY(-40px);
+                        filter: blur(4px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: scale(1) translateY(0);
+                        filter: blur(0);
+                    }
+                }
+                
+                .animate-in {
+                    animation: searchPopupIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+                }
+
+                /* Custom scrollbar for search popup */
+                .search-popup-content::-webkit-scrollbar {
+                    width: 6px;
+                }
+                
+                .search-popup-content::-webkit-scrollbar-track {
+                    background: rgba(51, 65, 85, 0.3);
+                    border-radius: 3px;
+                }
+                
+                .search-popup-content::-webkit-scrollbar-thumb {
+                    background: rgba(139, 92, 246, 0.5);
+                    border-radius: 3px;
+                }
+                
+                .search-popup-content::-webkit-scrollbar-thumb:hover {
+                    background: rgba(139, 92, 246, 0.7);
+                }
+
+                /* Glow effect for focused search input */
+                .search-input-glow:focus-within {
+                    box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.3), 
+                                0 0 0 4px rgba(139, 92, 246, 0.1),
+                                0 8px 32px rgba(139, 92, 246, 0.15);
+                }
+
+                /* Shimmer effect for popular searches */
+                @keyframes shimmer {
+                    0% { background-position: -200px 0; }
+                    100% { background-position: 200px 0; }
+                }
+                
+                .shimmer-bg {
+                    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+                    background-size: 200px 100%;
+                    animation: shimmer 2s infinite;
+                }
             `}</style>
-        </Navbar>
+            </Navbar>
+            
+            {/* Search Popup Modal - Outside Navbar */}
+            {isSearchPopupVisible && (
+                <div className='fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center z-[9999] p-4'>
+                    <div ref={searchPopupRef} className='bg-slate-800/95 backdrop-blur-xl border border-slate-600/50 rounded-3xl shadow-2xl w-full max-w-2xl transform transition-all duration-300 ease-out animate-in overflow-hidden'>
+                        {/* Header with close button */}
+                        <div className='flex items-center justify-between p-6 pb-4 border-b border-slate-700/50'>
+                            <div className='flex items-center gap-3'>
+                                <div className='w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center'>
+                                    <AiOutlineSearch className='text-white text-lg' />
+                                </div>
+                                <div>
+                                    <h2 className='text-white font-semibold text-lg'>Search Articles</h2>
+                                    <p className='text-gray-400 text-sm'>Find what you're looking for</p>
+                                </div>
+                            </div>
+                            <button 
+                                type="button" 
+                                onClick={handleSearchClose}
+                                className='w-8 h-8 rounded-full bg-slate-700/50 hover:bg-slate-600 flex items-center justify-center text-gray-400 hover:text-white transition-all duration-200'
+                            >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        {/* Search Form */}
+                        <form onSubmit={handleSearchSubmit} className='p-6 space-y-6'>
+                            <div className='relative group'>
+                                <div className='absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 blur-xl'></div>
+                                <div className='relative'>
+                                    <AiOutlineSearch className='absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl group-focus-within:text-purple-400 transition-colors duration-200' />
+                                    <TextInput
+                                        type="text"
+                                        placeholder="Search for articles, topics, or keywords..."
+                                        className='w-full pl-12 pr-24 bg-slate-700/50 border-slate-600/50 text-white placeholder-gray-400 focus:border-purple-500 focus:ring-purple-500/20 text-lg py-4 rounded-xl transition-all duration-200'
+                                        value={searchTerm}
+                                        onChange={handleSearchChange}
+                                        autoFocus
+                                    />
+                                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center gap-2">
+                                        <kbd className='px-2 py-1 bg-slate-600/70 text-gray-300 text-xs rounded font-medium border border-slate-500/50'>
+                                            ⌘ K
+                                        </kbd>
+                                    </div>
+                                </div>
+                            </div>
+
+                          
+
+                            {/* Action buttons */}
+                            <div className='flex items-center justify-between pt-4 border-t border-slate-700/50'>
+                                <div className='flex items-center gap-4 text-gray-400 text-sm'>
+                                    <div className='flex items-center gap-1'>
+                                        <kbd className='px-2 py-1 bg-slate-700/50 rounded text-xs border border-slate-600/50'>Esc</kbd>
+                                        <span>to close</span>
+                                    </div>
+                                    <div className='flex items-center gap-1'>
+                                        <kbd className='px-2 py-1 bg-slate-700/50 rounded text-xs border border-slate-600/50'>Enter</kbd>
+                                        <span>to search</span>
+                                    </div>
+                                </div>
+                                <div className='flex gap-3'>
+                                    <button 
+                                        type="button" 
+                                        onClick={handleSearchClose}
+                                        className='px-4 py-2 text-gray-400 hover:text-white transition-colors duration-200 rounded-lg hover:bg-slate-700/50'
+                                    >
+                                        Cancel
+                                    </button>
+                                    <button 
+                                        type="submit"
+                                        disabled={!searchTerm.trim()}
+                                        className='px-6 py-2 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-xl hover:from-purple-600 hover:to-pink-700 transition-all duration-200 font-medium shadow-lg hover:shadow-purple-500/25 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105 active:scale-95'
+                                    >
+                                        <div className='flex items-center gap-2'>
+                                            <AiOutlineSearch className='text-sm' />
+                                            Search
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
+        </>
     )
 }
