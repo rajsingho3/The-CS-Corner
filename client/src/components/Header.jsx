@@ -133,19 +133,25 @@ export default function Header() {
     return (
         <>
             <Navbar className='bg-slate-900/95 backdrop-blur-sm border-b border-slate-700 sticky top-0 z-50'>
-                <div className="flex justify-between items-center w-full px-4">
-                    <Link to='/' className='flex items-center gap-2 font-bold text-xl'>
-                        <div className='flex items-center gap-1'>
-                            <div className='w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center'>
-                                <span className='text-white font-bold text-sm'>ER</span>
+                <div className="flex justify-between items-center w-full px-3 sm:px-4 py-2">
+                    <Link to='/' className='flex items-center gap-2 font-bold text-sm sm:text-base lg:text-xl min-w-0 flex-shrink-0'>
+                        <div className='flex items-center gap-1.5 sm:gap-2'>
+                            <div className='w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center flex-shrink-0'>
+                                <span className='text-white font-bold text-xs sm:text-sm'>ER</span>
                             </div>
-                            <span className='text-white'>Engineering</span>
-                            <span className='bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent'>Reference</span>
+                            <div className='hidden xs:flex flex-col sm:flex-row sm:items-center sm:gap-1'>
+                                <span className='text-white text-xs sm:text-sm lg:text-base leading-tight'>Engineering</span>
+                                <span className='bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent text-xs sm:text-sm lg:text-base leading-tight'>Reference</span>
+                            </div>
+                            {/* Mobile shortened version */}
+                            <div className='flex xs:hidden items-center'>
+                                <span className='text-white text-sm font-semibold'>ER</span>
+                            </div>
                         </div>
                     </Link>
                 
                 {/* Desktop Search Box */}
-                <div className='flex-grow max-w-md mx-8 hidden md:block'>
+                <div className='flex-grow max-w-md mx-4 lg:mx-8 hidden md:block'>
                     <form className='relative' onSubmit={handleSearchSubmit}>
                         <TextInput
                             type="text"
@@ -155,20 +161,23 @@ export default function Header() {
                             onChange={handleSearchChange}
                             onClick={handleSearchClick}
                         />
-                        <span className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-slate-700 text-gray-300 text-xs px-2 py-1 rounded border border-slate-600">
+                        <span className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-slate-700 text-gray-300 text-xs px-2 py-1 rounded border border-slate-600 hidden lg:inline">
                             Ctrl + K
                         </span>
                     </form>
                 </div>
 
-                {/* Mobile Search Icon */}
-                <div className='md:hidden'>
-                    <button onClick={handleSearchClick} className='p-2 text-gray-400 hover:text-white transition-colors'>
-                        <AiOutlineSearch className='text-xl' />
-                    </button>
-                </div>
+                {/* Right side controls */}
+                <div className='flex items-center gap-1 sm:gap-2 lg:gap-4'>
+                    {/* Mobile Search Icon */}
+                    <div className='md:hidden'>
+                        <button onClick={handleSearchClick} className='p-1.5 sm:p-2 text-gray-400 hover:text-white transition-colors rounded-lg hover:bg-slate-800'>
+                            <AiOutlineSearch className='text-base sm:text-lg' />
+                        </button>
+                    </div>
 
-                <div className='flex items-center gap-4'>                    <div className='hidden md:flex items-center gap-6'>
+                    {/* Desktop Navigation */}
+                    <div className='hidden lg:flex items-center gap-6'>
                         <Link to='/' className={`text-sm font-medium transition-colors ${path === '/' ? 'text-purple-400' : 'text-gray-300 hover:text-white'}`}>
                             Home
                         </Link>
@@ -183,8 +192,14 @@ export default function Header() {
                         </Link>
                     </div>
 
-                  
-                    
+                    {/* Theme Toggle */}
+                    <button
+                        className='p-1.5 sm:p-2 text-gray-400 hover:text-white transition-colors rounded-lg hover:bg-slate-800'
+                        onClick={() => dispatch(toggleTheme())}
+                    >
+                        {theme === 'light' ? <FaMoon className='text-sm sm:text-base' /> : <FaSun className='text-sm sm:text-base' />}
+                    </button>
+                    {/* User Profile / Sign In */}
                     {currentUser ? (
                         <Dropdown arrowIcon={false} inline label={
                             <div className="relative group cursor-pointer">
@@ -192,8 +207,10 @@ export default function Header() {
                                     alt='User'
                                     img={currentUser.profilePicture || defaultProfilePicture} 
                                     rounded
+                                    size="sm"
                                     className="ring-2 ring-purple-500/50 group-hover:ring-purple-400 transition-all duration-300"
-                                />                                <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-slate-900 rounded-full"></div>
+                                />
+                                <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 border-2 border-slate-900 rounded-full"></div>
                             </div>
                         }>
                             <Dropdown.Header className="bg-slate-800 border-b border-slate-600">
@@ -253,29 +270,32 @@ export default function Header() {
                         </Dropdown>
                     ) : (
                         <Link to='/signin'>
-                            <button className='bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white font-medium py-2 px-6 rounded-full transition-all duration-300 transform hover:scale-105'>
+                            <button className='bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white font-medium py-1.5 px-3 sm:py-2 sm:px-4 lg:px-6 rounded-full transition-all duration-300 transform hover:scale-105 text-xs sm:text-sm lg:text-base'>
                                 Sign in
                             </button>
                         </Link>
                     )}
                     
-                    <button className='md:hidden p-2 text-gray-400 hover:text-white'>
-                        <Navbar.Toggle />
-                    </button>
+                    {/* Mobile Menu Toggle */}
+                    <div className='lg:hidden'>
+                        <Navbar.Toggle className='p-1.5 sm:p-2 text-gray-400 hover:text-white transition-colors rounded-lg hover:bg-slate-800 border-none focus:ring-0' />
+                    </div>
                 </div>
             </div>
             
-            <Navbar.Collapse className="md:hidden bg-slate-800 border-t border-slate-700 mt-2">                <div className="flex flex-col gap-2 p-4">
-                    <Link to='/' className={`p-2 rounded transition-colors ${path === '/' ? 'text-purple-400 bg-slate-700' : 'text-gray-300 hover:text-white hover:bg-slate-700'}`}>
+            {/* Mobile Navigation Menu */}
+            <Navbar.Collapse className="lg:hidden bg-slate-800 border-t border-slate-700">
+                <div className="flex flex-col gap-1 p-4">
+                    <Link to='/' className={`p-3 rounded-lg transition-colors ${path === '/' ? 'text-purple-400 bg-slate-700' : 'text-gray-300 hover:text-white hover:bg-slate-700'}`}>
                         Home
                     </Link>
-                    <Link to='/about' className={`p-2 rounded transition-colors ${path === '/about' ? 'text-purple-400 bg-slate-700' : 'text-gray-300 hover:text-white hover:bg-slate-700'}`}>
+                    <Link to='/about' className={`p-3 rounded-lg transition-colors ${path === '/about' ? 'text-purple-400 bg-slate-700' : 'text-gray-300 hover:text-white hover:bg-slate-700'}`}>
                         About
                     </Link>
-                    <Link to='/pyq-browser' className={`p-2 rounded transition-colors ${path === '/pyq-browser' ? 'text-purple-400 bg-slate-700' : 'text-gray-300 hover:text-white hover:bg-slate-700'}`}>
+                    <Link to='/pyq-browser' className={`p-3 rounded-lg transition-colors ${path === '/pyq-browser' ? 'text-purple-400 bg-slate-700' : 'text-gray-300 hover:text-white hover:bg-slate-700'}`}>
                         PYQ Papers
                     </Link>
-                    <Link to='/project' className={`p-2 rounded transition-colors ${path === '/project' ? 'text-purple-400 bg-slate-700' : 'text-gray-300 hover:text-white hover:bg-slate-700'}`}>
+                    <Link to='/project' className={`p-3 rounded-lg transition-colors ${path === '/project' ? 'text-purple-400 bg-slate-700' : 'text-gray-300 hover:text-white hover:bg-slate-700'}`}>
                         Project
                     </Link>
                 </div>
@@ -283,6 +303,36 @@ export default function Header() {
             
             {/* Custom Dropdown Styles */}
             <style jsx global>{`
+                /* Mobile responsive breakpoints */
+                @media (max-width: 475px) {
+                    .xs\:hidden {
+                        display: none !important;
+                    }
+                    .xs\:flex {
+                        display: flex !important;
+                    }
+                }
+
+                /* Mobile header improvements */
+                @media (max-width: 640px) {
+                    .flowbite-dropdown {
+                        min-width: 280px !important;
+                        max-width: calc(100vw - 24px) !important;
+                    }
+                }
+
+                /* Improve mobile menu toggle */
+                .flowbite-navbar-toggle {
+                    border: none !important;
+                    background: transparent !important;
+                    padding: 6px !important;
+                }
+
+                .flowbite-navbar-toggle:focus {
+                    ring: 0 !important;
+                    outline: none !important;
+                }
+
                 .flowbite-dropdown {
                     background: rgb(30 41 59 / 0.95) !important;
                     backdrop-filter: blur(12px) !important;
@@ -390,80 +440,78 @@ export default function Header() {
             
             {/* Search Popup Modal - Outside Navbar */}
             {isSearchPopupVisible && (
-                <div className='fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center z-[9999] p-4'>
-                    <div ref={searchPopupRef} className='bg-slate-800/95 backdrop-blur-xl border border-slate-600/50 rounded-3xl shadow-2xl w-full max-w-2xl transform transition-all duration-300 ease-out animate-in overflow-hidden'>
+                <div className='fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center z-[9999] p-2 sm:p-4'>
+                    <div ref={searchPopupRef} className='bg-slate-800/95 backdrop-blur-xl border border-slate-600/50 rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-2xl transform transition-all duration-300 ease-out animate-in overflow-hidden max-h-[90vh]'>
                         {/* Header with close button */}
-                        <div className='flex items-center justify-between p-6 pb-4 border-b border-slate-700/50'>
-                            <div className='flex items-center gap-3'>
-                                <div className='w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center'>
-                                    <AiOutlineSearch className='text-white text-lg' />
+                        <div className='flex items-center justify-between p-4 sm:p-6 pb-3 sm:pb-4 border-b border-slate-700/50'>
+                            <div className='flex items-center gap-2 sm:gap-3'>
+                                <div className='w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center'>
+                                    <AiOutlineSearch className='text-white text-base sm:text-lg' />
                                 </div>
                                 <div>
-                                    <h2 className='text-white font-semibold text-lg'>Search Articles</h2>
-                                    <p className='text-gray-400 text-sm'>Find what you're looking for</p>
+                                    <h2 className='text-white font-semibold text-base sm:text-lg'>Search Articles</h2>
+                                    <p className='text-gray-400 text-xs sm:text-sm'>Find what you're looking for</p>
                                 </div>
                             </div>
                             <button 
                                 type="button" 
                                 onClick={handleSearchClose}
-                                className='w-8 h-8 rounded-full bg-slate-700/50 hover:bg-slate-600 flex items-center justify-center text-gray-400 hover:text-white transition-all duration-200'
+                                className='w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-700/50 hover:bg-slate-600 flex items-center justify-center text-gray-400 hover:text-white transition-all duration-200'
                             >
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                                 </svg>
                             </button>
                         </div>
 
                         {/* Search Form */}
-                        <form onSubmit={handleSearchSubmit} className='p-6 space-y-6'>
+                        <form onSubmit={handleSearchSubmit} className='p-4 sm:p-6 space-y-4 sm:space-y-6'>
                             <div className='relative group'>
                                 <div className='absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 blur-xl'></div>
                                 <div className='relative'>
-                                    <AiOutlineSearch className='absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl group-focus-within:text-purple-400 transition-colors duration-200' />
+                                    <AiOutlineSearch className='absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg sm:text-xl group-focus-within:text-purple-400 transition-colors duration-200' />
                                     <TextInput
                                         type="text"
                                         placeholder="Search for articles, topics, or keywords..."
-                                        className='w-full pl-12 pr-24 bg-slate-700/50 border-slate-600/50 text-white placeholder-gray-400 focus:border-purple-500 focus:ring-purple-500/20 text-lg py-4 rounded-xl transition-all duration-200'
+                                        className='w-full pl-10 sm:pl-12 pr-16 sm:pr-24 bg-slate-700/50 border-slate-600/50 text-white placeholder-gray-400 focus:border-purple-500 focus:ring-purple-500/20 text-base sm:text-lg py-3 sm:py-4 rounded-xl transition-all duration-200'
                                         value={searchTerm}
                                         onChange={handleSearchChange}
                                         autoFocus
                                     />
-                                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center gap-2">
-                                        <kbd className='px-2 py-1 bg-slate-600/70 text-gray-300 text-xs rounded font-medium border border-slate-500/50'>
+                                    <div className="absolute right-2 sm:right-3 top-1/2 transform -translate-y-1/2 flex items-center gap-2">
+                                        <kbd className='px-1.5 sm:px-2 py-1 bg-slate-600/70 text-gray-300 text-xs rounded font-medium border border-slate-500/50 hidden sm:inline'>
                                             ⌘ K
                                         </kbd>
                                     </div>
                                 </div>
                             </div>
 
-                          
-
                             {/* Action buttons */}
-                            <div className='flex items-center justify-between pt-4 border-t border-slate-700/50'>
-                                <div className='flex items-center gap-4 text-gray-400 text-sm'>
+                            <div className='flex flex-col sm:flex-row items-stretch sm:items-center justify-between pt-3 sm:pt-4 border-t border-slate-700/50 gap-3 sm:gap-0'>
+                                <div className='flex items-center gap-3 sm:gap-4 text-gray-400 text-xs sm:text-sm justify-center sm:justify-start'>
                                     <div className='flex items-center gap-1'>
-                                        <kbd className='px-2 py-1 bg-slate-700/50 rounded text-xs border border-slate-600/50'>Esc</kbd>
+                                        <kbd className='px-1.5 sm:px-2 py-1 bg-slate-700/50 rounded text-xs border border-slate-600/50'>Esc</kbd>
                                         <span>to close</span>
                                     </div>
                                     <div className='flex items-center gap-1'>
-                                        <kbd className='px-2 py-1 bg-slate-700/50 rounded text-xs border border-slate-600/50'>Enter</kbd>
+                                        <kbd className='px-1.5 sm:px-2 py-1 bg-slate-700/50 rounded text-xs border border-slate-600/50'>Enter</kbd>
                                         <span>to search</span>
                                     </div>
                                 </div>
-                                <div className='flex gap-3'>
+                                <div className='flex gap-2 sm:gap-3'>
                                     <button 
                                         type="button" 
                                         onClick={handleSearchClose}
-                                        className='px-4 py-2 text-gray-400 hover:text-white transition-colors duration-200 rounded-lg hover:bg-slate-700/50'
+                                        className='flex-1 sm:flex-none px-4 py-2 text-gray-400 hover:text-white transition-colors duration-200 rounded-lg hover:bg-slate-700/50'
                                     >
                                         Cancel
                                     </button>
                                     <button 
                                         type="submit"
                                         disabled={!searchTerm.trim()}
-                                        className='px-6 py-2 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-xl hover:from-purple-600 hover:to-pink-700 transition-all duration-200 font-medium shadow-lg hover:shadow-purple-500/25 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105 active:scale-95'
+                                        className='flex-1 sm:flex-none px-4 sm:px-6 py-2 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-xl hover:from-purple-600 hover:to-pink-700 transition-all duration-200 font-medium shadow-lg hover:shadow-purple-500/25 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105 active:scale-95'
                                     >
-                                        <div className='flex items-center gap-2'>
+                                        <div className='flex items-center justify-center gap-2'>
                                             <AiOutlineSearch className='text-sm' />
                                             Search
                                         </div>

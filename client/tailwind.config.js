@@ -9,7 +9,11 @@ export default {
     'node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      screens: {
+        'xs': '475px',
+      },
+    },
   },
   plugins: [
     flowbitePlugin,
