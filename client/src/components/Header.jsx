@@ -132,85 +132,102 @@ export default function Header() {
     
     return (
         <>
-            <Navbar className='bg-slate-900/95 backdrop-blur-sm border-b border-slate-700 sticky top-0 z-50'>
-                <div className="flex justify-between items-center w-full px-3 sm:px-4 py-2">
-                    <Link to='/' className='flex items-center gap-2 font-bold text-sm sm:text-base lg:text-xl min-w-0 flex-shrink-0'>
+            <Navbar className='bg-slate-900/95 backdrop-blur-xl border-b border-slate-700/70 sticky top-0 z-50 shadow-2xl shadow-black/20 transition-all duration-300'>
+                <div className="flex justify-between items-center w-full px-3 sm:px-4 py-0">
+                    <Link to='/' className='flex items-center gap-2 font-bold text-sm sm:text-base lg:text-xl min-w-0 flex-shrink-0 group transition-all duration-300 hover:scale-105'>
                         <div className='flex items-center gap-1.5 sm:gap-2'>
-                            <div className='w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center flex-shrink-0'>
-                                <span className='text-white font-bold text-xs sm:text-sm'>ER</span>
+                            
+                            <div className='w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center flex-shrink-0 shadow-lg shadow-purple-500/30 group-hover:shadow-purple-500/50 transition-all duration-300 group-hover:rotate-3'>
+                                <span className='text-white font-bold text-sm sm:text-base'>ER</span>
                             </div>
-                            <div className='hidden xs:flex flex-col sm:flex-row sm:items-center sm:gap-1'>
-                                <span className='text-white text-xs sm:text-sm lg:text-base leading-tight'>Engineering</span>
-                                <span className='bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent text-xs sm:text-sm lg:text-base leading-tight'>Reference</span>
+                            {/* Desktop full text version with enhanced gradient */}
+                            <div className='hidden sm:flex flex-col sm:flex-row sm:items-center sm:gap-1 transition-all duration-300 group-hover:translate-x-1'>
+                                <span className='text-white text-sm sm:text-base lg:text-xl leading-tight font-semibold tracking-wide drop-shadow-sm'>Engineering</span>
+                                <span className='bg-gradient-to-r from-purple-400 via-pink-400 to-indigo-400 bg-clip-text text-transparent text-sm sm:text-base lg:text-xl leading-tight font-bold tracking-wide drop-shadow-sm animate-gradient'>Reference</span>
                             </div>
                             {/* Mobile shortened version */}
-                            <div className='flex xs:hidden items-center'>
-                                <span className='text-white text-sm font-semibold'>ER</span>
+                            <div className='flex sm:hidden items-center'>
+                                <span className='text-white text-base font-bold drop-shadow-sm'>Engineering Reference</span>
                             </div>
                         </div>
                     </Link>
                 
-                {/* Desktop Search Box */}
+                {/* Desktop Search Box with enhanced styling */}
                 <div className='flex-grow max-w-md mx-4 lg:mx-8 hidden md:block'>
-                    <form className='relative' onSubmit={handleSearchSubmit}>
+                    <form className='relative group' onSubmit={handleSearchSubmit}>
+                        <div className='absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-xl opacity-0 group-focus-within:opacity-100 transition-all duration-300 blur-sm'></div>
                         <TextInput
                             type="text"
-                            placeholder="Search articles..."
-                            className='w-full bg-slate-800 border-slate-600 text-white placeholder-gray-400 focus:border-purple-500'
+                            placeholder="Search articles, tutorials, and more..."
+                            className='w-full bg-slate-800/80 border-slate-600/50 text-white placeholder-gray-400 focus:border-purple-500 focus:ring-purple-500/20 transition-all duration-300 hover:bg-slate-800 backdrop-blur-sm rounded-xl'
                             value={searchTerm}
                             onChange={handleSearchChange}
                             onClick={handleSearchClick}
                         />
-                        <span className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-slate-700 text-gray-300 text-xs px-2 py-1 rounded border border-slate-600 hidden lg:inline">
-                            Ctrl + K
-                        </span>
+                        <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center gap-2">
+                            <AiOutlineSearch className='text-gray-400 group-focus-within:text-purple-400 transition-colors duration-200' />
+                            <span className="bg-slate-700/90 text-gray-300 text-xs px-2 py-1 rounded-md border border-slate-600/50 hidden md:inline font-medium backdrop-blur-sm shadow-sm">
+                                Ctrl + K
+                            </span>
+                        </div>
                     </form>
                 </div>
 
                 {/* Right side controls */}
                 <div className='flex items-center gap-1 sm:gap-2 lg:gap-4'>
-                    {/* Mobile Search Icon */}
-                    <div className='md:hidden'>
-                        <button onClick={handleSearchClick} className='p-1.5 sm:p-2 text-gray-400 hover:text-white transition-colors rounded-lg hover:bg-slate-800'>
-                            <AiOutlineSearch className='text-base sm:text-lg' />
+                    {/* Mobile Search Icon with enhanced styling */}
+                    <div className='md:hidden relative group'>
+                        <button 
+                            onClick={handleSearchClick} 
+                            className='p-2 text-gray-400 hover:text-white transition-all duration-300 rounded-xl hover:bg-slate-800/80 hover:scale-110 backdrop-blur-sm border border-transparent hover:border-slate-600/30'
+                            title="Search (Ctrl + K)"
+                        >
+                            <AiOutlineSearch className='text-lg' />
                         </button>
+                        {/* Tooltip for mobile */}
+                        <div className='absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-2 py-1 bg-slate-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50'>
+                            Search (Ctrl + K)
+                        </div>
                     </div>
 
-                    {/* Desktop Navigation */}
-                    <div className='hidden lg:flex items-center gap-6'>
-                        <Link to='/' className={`text-sm font-medium transition-colors ${path === '/' ? 'text-purple-400' : 'text-gray-300 hover:text-white'}`}>
+                    {/* Desktop Navigation with enhanced styling */}
+                    <div className='hidden lg:flex items-center gap-8'>
+                        <Link to='/' className={`text-sm font-medium transition-all duration-300 hover:scale-105 py-2 px-3 rounded-lg relative group ${path === '/' ? 'text-purple-400' : 'text-gray-300 hover:text-white'}`}>
                             Home
+                            {path === '/' && <div className='absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full'></div>}
+                            <div className='absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left'></div>
                         </Link>
-                        <Link to='/about' className={`text-sm font-medium transition-colors ${path === '/about' ? 'text-purple-400' : 'text-gray-300 hover:text-white'}`}>
+                        <Link to='/about' className={`text-sm font-medium transition-all duration-300 hover:scale-105 py-2 px-3 rounded-lg relative group ${path === '/about' ? 'text-purple-400' : 'text-gray-300 hover:text-white'}`}>
                             About
+                            {path === '/about' && <div className='absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full'></div>}
+                            <div className='absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left'></div>
                         </Link>
-                        <Link to='/pyq-browser' className={`text-sm font-medium transition-colors ${path === '/pyq-browser' ? 'text-purple-400' : 'text-gray-300 hover:text-white'}`}>
+                        <Link to='/pyq-browser' className={`text-sm font-medium transition-all duration-300 hover:scale-105 py-2 px-3 rounded-lg relative group ${path === '/pyq-browser' ? 'text-purple-400' : 'text-gray-300 hover:text-white'}`}>
                             PYQ Papers
+                            {path === '/pyq-browser' && <div className='absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full'></div>}
+                            <div className='absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left'></div>
                         </Link>
-                        <Link to='/project' className={`text-sm font-medium transition-colors ${path === '/project' ? 'text-purple-400' : 'text-gray-300 hover:text-white'}`}>
-                            Project
+                        <Link to='/project' className={`text-sm font-medium transition-all duration-300 hover:scale-105 py-2 px-3 rounded-lg relative group ${path === '/project' ? 'text-purple-400' : 'text-gray-300 hover:text-white'}`}>
+                            Projects
+                            {path === '/project' && <div className='absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full'></div>}
+                            <div className='absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left'></div>
                         </Link>
                     </div>
 
-                    {/* Theme Toggle */}
-                    <button
-                        className='p-1.5 sm:p-2 text-gray-400 hover:text-white transition-colors rounded-lg hover:bg-slate-800'
-                        onClick={() => dispatch(toggleTheme())}
-                    >
-                        {theme === 'light' ? <FaMoon className='text-sm sm:text-base' /> : <FaSun className='text-sm sm:text-base' />}
-                    </button>
-                    {/* User Profile / Sign In */}
+                    {/* User Profile / Sign In with enhanced styling */}
                     {currentUser ? (
                         <Dropdown arrowIcon={false} inline label={
-                            <div className="relative group cursor-pointer">
+                            <div className="relative group cursor-pointer transition-all duration-300 hover:scale-105">
+                                <div className='absolute inset-0 bg-gradient-to-r from-purple-500/30 to-pink-500/30 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-md'></div>
                                 <Avatar
                                     alt='User'
                                     img={currentUser.profilePicture || defaultProfilePicture} 
                                     rounded
-                                    size="sm"
-                                    className="ring-2 ring-purple-500/50 group-hover:ring-purple-400 transition-all duration-300"
+                                    size="md"
+                                    className="ring-2 ring-purple-500/50 group-hover:ring-purple-400 group-hover:ring-4 transition-all duration-300 relative z-10 shadow-lg"
                                 />
-                                <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 border-2 border-slate-900 rounded-full"></div>
+                                <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-slate-900 rounded-full z-20 shadow-lg animate-pulse"></div>
+                                <div className="absolute -top-1 -right-1 w-3 h-3 bg-purple-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-ping"></div>
                             </div>
                         }>
                             <Dropdown.Header className="bg-slate-800 border-b border-slate-600">
@@ -270,40 +287,77 @@ export default function Header() {
                         </Dropdown>
                     ) : (
                         <Link to='/signin'>
-                            <button className='bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white font-medium py-1.5 px-3 sm:py-2 sm:px-4 lg:px-6 rounded-full transition-all duration-300 transform hover:scale-105 text-xs sm:text-sm lg:text-base'>
-                                Sign in
+                            <button className='bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500 hover:from-purple-600 hover:via-pink-600 hover:to-indigo-600 text-white font-semibold py-2 px-4 lg:px-6 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25 text-sm lg:text-base border border-purple-400/20 backdrop-blur-sm group relative overflow-hidden'>
+                                <div className='absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700'></div>
+                                <span className='relative z-10 flex items-center gap-2'>
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                    </svg>
+                                    Sign In
+                                </span>
                             </button>
                         </Link>
                     )}
                     
-                    {/* Mobile Menu Toggle */}
+                    {/* Mobile Menu Toggle with enhanced styling */}
                     <div className='lg:hidden'>
-                        <Navbar.Toggle className='p-1.5 sm:p-2 text-gray-400 hover:text-white transition-colors rounded-lg hover:bg-slate-800 border-none focus:ring-0' />
+                        <Navbar.Toggle className='p-2 text-gray-400 hover:text-white transition-all duration-300 rounded-xl hover:bg-slate-800/80 border-none focus:ring-0 hover:scale-110 backdrop-blur-sm border border-transparent hover:border-slate-600/30' />
                     </div>
                 </div>
             </div>
             
-            {/* Mobile Navigation Menu */}
-            <Navbar.Collapse className="lg:hidden bg-slate-800 border-t border-slate-700">
-                <div className="flex flex-col gap-1 p-4">
-                    <Link to='/' className={`p-3 rounded-lg transition-colors ${path === '/' ? 'text-purple-400 bg-slate-700' : 'text-gray-300 hover:text-white hover:bg-slate-700'}`}>
-                        Home
+            {/* Mobile Navigation Menu with enhanced styling */}
+            <Navbar.Collapse className="lg:hidden bg-slate-800/95 backdrop-blur-xl border-t border-slate-700/70 shadow-lg">
+                <div className="flex flex-col gap-2 p-4">
+                    <Link to='/' className={`p-4 rounded-xl transition-all duration-300 hover:scale-[1.02] ${path === '/' ? 'text-purple-400 bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30' : 'text-gray-300 hover:text-white hover:bg-slate-700/80 border border-transparent hover:border-slate-600/30'}`}>
+                        <div className='flex items-center gap-3'>
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                            </svg>
+                            <span className='font-medium'>Home</span>
+                        </div>
                     </Link>
-                    <Link to='/about' className={`p-3 rounded-lg transition-colors ${path === '/about' ? 'text-purple-400 bg-slate-700' : 'text-gray-300 hover:text-white hover:bg-slate-700'}`}>
-                        About
+                    <Link to='/about' className={`p-4 rounded-xl transition-all duration-300 hover:scale-[1.02] ${path === '/about' ? 'text-purple-400 bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30' : 'text-gray-300 hover:text-white hover:bg-slate-700/80 border border-transparent hover:border-slate-600/30'}`}>
+                        <div className='flex items-center gap-3'>
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span className='font-medium'>About</span>
+                        </div>
                     </Link>
-                    <Link to='/pyq-browser' className={`p-3 rounded-lg transition-colors ${path === '/pyq-browser' ? 'text-purple-400 bg-slate-700' : 'text-gray-300 hover:text-white hover:bg-slate-700'}`}>
-                        PYQ Papers
+                    <Link to='/pyq-browser' className={`p-4 rounded-xl transition-all duration-300 hover:scale-[1.02] ${path === '/pyq-browser' ? 'text-purple-400 bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30' : 'text-gray-300 hover:text-white hover:bg-slate-700/80 border border-transparent hover:border-slate-600/30'}`}>
+                        <div className='flex items-center gap-3'>
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                            </svg>
+                            <span className='font-medium'>PYQ Papers</span>
+                        </div>
                     </Link>
-                    <Link to='/project' className={`p-3 rounded-lg transition-colors ${path === '/project' ? 'text-purple-400 bg-slate-700' : 'text-gray-300 hover:text-white hover:bg-slate-700'}`}>
-                        Project
+                    <Link to='/project' className={`p-4 rounded-xl transition-all duration-300 hover:scale-[1.02] ${path === '/project' ? 'text-purple-400 bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30' : 'text-gray-300 hover:text-white hover:bg-slate-700/80 border border-transparent hover:border-slate-600/30'}`}>
+                        <div className='flex items-center gap-3'>
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                            </svg>
+                            <span className='font-medium'>Projects</span>
+                        </div>
                     </Link>
                 </div>
             </Navbar.Collapse>
             
-            {/* Custom Dropdown Styles */}
+            {/* Custom Dropdown Styles with enhanced animations */}
             <style jsx global>{`
-                /* Mobile responsive breakpoints */
+                /* Enhanced gradient animation */
+                @keyframes gradient {
+                    0%, 100% { background-position: 0% 50%; }
+                    50% { background-position: 100% 50%; }
+                }
+                
+                .animate-gradient {
+                    background-size: 200% 200%;
+                    animation: gradient 3s ease infinite;
+                }
+
+                /* Enhanced mobile responsive breakpoints */
                 @media (max-width: 475px) {
                     .xs\:hidden {
                         display: none !important;
@@ -313,7 +367,7 @@ export default function Header() {
                     }
                 }
 
-                /* Mobile header improvements */
+                /* Enhanced mobile header improvements */
                 @media (max-width: 640px) {
                     .flowbite-dropdown {
                         min-width: 280px !important;
@@ -321,11 +375,11 @@ export default function Header() {
                     }
                 }
 
-                /* Improve mobile menu toggle */
+                /* Enhanced mobile menu toggle */
                 .flowbite-navbar-toggle {
                     border: none !important;
                     background: transparent !important;
-                    padding: 6px !important;
+                    padding: 8px !important;
                 }
 
                 .flowbite-navbar-toggle:focus {
@@ -333,12 +387,14 @@ export default function Header() {
                     outline: none !important;
                 }
 
+                /* Enhanced dropdown styling */
                 .flowbite-dropdown {
-                    background: rgb(30 41 59 / 0.95) !important;
-                    backdrop-filter: blur(12px) !important;
-                    border: 1px solid rgb(71 85 105) !important;
-                    border-radius: 16px !important;
-                    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+                    background: rgba(30, 41, 59, 0.95) !important;
+                    backdrop-filter: blur(20px) !important;
+                    border: 1px solid rgba(139, 92, 246, 0.3) !important;
+                    border-radius: 20px !important;
+                    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 
+                                0 0 0 1px rgba(139, 92, 246, 0.1) !important;
                     min-width: 320px !important;
                 }
                 
@@ -347,45 +403,52 @@ export default function Header() {
                 }
                 
                 .flowbite-dropdown .flowbite-dropdown-item {
-                    border-radius: 8px !important;
-                    margin: 2px 8px !important;
+                    border-radius: 12px !important;
+                    margin: 4px 12px !important;
+                    transition: all 0.3s ease !important;
                 }
                 
                 .flowbite-dropdown .flowbite-dropdown-item:hover {
-                    background-color: rgb(51 65 85) !important;
+                    background-color: rgba(51, 65, 85, 0.8) !important;
+                    transform: translateX(4px) !important;
                 }
                 
                 .flowbite-dropdown .flowbite-dropdown-divider {
-                    margin: 8px 0 !important;
-                    border-color: rgb(71 85 105) !important;
+                    margin: 12px 0 !important;
+                    border-color: rgba(139, 92, 246, 0.3) !important;
                 }
                 
                 .flowbite-dropdown .flowbite-dropdown-header {
-                    background: linear-gradient(135deg, rgb(71 85 105) 0%, rgb(51 65 85) 100%) !important;
-                    border-radius: 12px 12px 0 0 !important;
-                    margin-bottom: 8px !important;
+                    background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(168, 85, 247, 0.2) 100%) !important;
+                    border-radius: 16px 16px 0 0 !important;
+                    margin-bottom: 12px !important;
+                    border-bottom: 1px solid rgba(139, 92, 246, 0.3) !important;
                 }
                 
+                /* Enhanced dropdown animations */
                 @keyframes dropdownSlide {
                     from {
                         opacity: 0;
-                        transform: translateY(-10px) scale(0.95);
+                        transform: translateY(-20px) scale(0.9);
+                        filter: blur(4px);
                     }
                     to {
                         opacity: 1;
                         transform: translateY(0) scale(1);
+                        filter: blur(0);
                     }
                 }
                 
                 .flowbite-dropdown {
-                    animation: dropdownSlide 0.2s ease-out !important;
+                    animation: dropdownSlide 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
                 }
                 
+                /* Enhanced search popup animations */
                 @keyframes searchPopupIn {
                     from {
                         opacity: 0;
-                        transform: scale(0.9) translateY(-40px);
-                        filter: blur(4px);
+                        transform: scale(0.8) translateY(-60px);
+                        filter: blur(8px);
                     }
                     to {
                         opacity: 1;
@@ -395,45 +458,74 @@ export default function Header() {
                 }
                 
                 .animate-in {
-                    animation: searchPopupIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+                    animation: searchPopupIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
                 }
 
-                /* Custom scrollbar for search popup */
+                /* Enhanced custom scrollbar for search popup */
                 .search-popup-content::-webkit-scrollbar {
-                    width: 6px;
+                    width: 8px;
                 }
                 
                 .search-popup-content::-webkit-scrollbar-track {
-                    background: rgba(51, 65, 85, 0.3);
-                    border-radius: 3px;
+                    background: rgba(51, 65, 85, 0.4);
+                    border-radius: 4px;
                 }
                 
                 .search-popup-content::-webkit-scrollbar-thumb {
-                    background: rgba(139, 92, 246, 0.5);
-                    border-radius: 3px;
+                    background: linear-gradient(180deg, rgba(139, 92, 246, 0.6), rgba(168, 85, 247, 0.6));
+                    border-radius: 4px;
+                    border: 1px solid rgba(139, 92, 246, 0.3);
                 }
                 
                 .search-popup-content::-webkit-scrollbar-thumb:hover {
-                    background: rgba(139, 92, 246, 0.7);
+                    background: linear-gradient(180deg, rgba(139, 92, 246, 0.8), rgba(168, 85, 247, 0.8));
                 }
 
-                /* Glow effect for focused search input */
+                /* Enhanced glow effect for focused search input */
                 .search-input-glow:focus-within {
-                    box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.3), 
+                    box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.4), 
                                 0 0 0 4px rgba(139, 92, 246, 0.1),
-                                0 8px 32px rgba(139, 92, 246, 0.15);
+                                0 12px 40px rgba(139, 92, 246, 0.2);
                 }
 
-                /* Shimmer effect for popular searches */
+                /* Enhanced shimmer effect */
                 @keyframes shimmer {
-                    0% { background-position: -200px 0; }
-                    100% { background-position: 200px 0; }
+                    0% { background-position: -300px 0; }
+                    100% { background-position: 300px 0; }
                 }
                 
                 .shimmer-bg {
-                    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
-                    background-size: 200px 100%;
-                    animation: shimmer 2s infinite;
+                    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+                    background-size: 300px 100%;
+                    animation: shimmer 2.5s infinite;
+                }
+
+                /* Enhanced floating effect */
+                @keyframes float {
+                    0%, 100% { transform: translateY(0px); }
+                    50% { transform: translateY(-3px); }
+                }
+                
+                .animate-float {
+                    animation: float 3s ease-in-out infinite;
+                }
+
+                /* Enhanced pulse animation */
+                @keyframes pulse-glow {
+                    0%, 100% { 
+                        box-shadow: 0 0 5px rgba(139, 92, 246, 0.4),
+                                    0 0 10px rgba(139, 92, 246, 0.3),
+                                    0 0 15px rgba(139, 92, 246, 0.2);
+                    }
+                    50% { 
+                        box-shadow: 0 0 10px rgba(139, 92, 246, 0.6),
+                                    0 0 20px rgba(139, 92, 246, 0.4),
+                                    0 0 30px rgba(139, 92, 246, 0.3);
+                    }
+                }
+                
+                .animate-pulse-glow {
+                    animation: pulse-glow 2s ease-in-out infinite;
                 }
             `}</style>
             </Navbar>
