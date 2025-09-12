@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import User from "../models/user.model.js";
-import TempUser from "../models/tempUser.model.js"; // Import TempUser model
+import TempUser from "../models/tempUser.model.js";
 import bcryptjs from "bcryptjs";
 import { errorHandler } from "../utils/error.js";
 import jwt from "jsonwebtoken";
@@ -14,7 +14,7 @@ export const signup = async (req, res, next) => {
     }
 
     try {
-        // Check if user already exists
+       
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             return next(errorHandler(400, "Email already registered"));
@@ -23,7 +23,7 @@ export const signup = async (req, res, next) => {
         const hashedPassword = bcryptjs.hashSync(password, 10);
         const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
 
-        // Store user data in temporary collection
+        
         const tempUser = new TempUser({
             username,
             email,
@@ -32,7 +32,7 @@ export const signup = async (req, res, next) => {
         });
         await tempUser.save();
 
-        // Send verification code
+        
         await SendVerificationCode(email, verificationCode);
         res.json({ success: true, message: "Verification code sent successfully" });
         
@@ -134,7 +134,7 @@ export const verifyOtp = async (req, res, next) => {
             return next(errorHandler(400, "Invalid OTP"));
         }
 
-        // Move user data from TempUser to User collection
+        
         const newUser = new User({
             username: tempUser.username,
             email: tempUser.email,
@@ -143,10 +143,10 @@ export const verifyOtp = async (req, res, next) => {
         });
         await newUser.save();
 
-        // Remove temporary user data
+        
         await TempUser.deleteOne({ email });
 
-        // Create JWT token
+       
         const token = jwt.sign(
             { id: newUser._id, isAdmin: newUser.isAdmin },
             process.env.JWT_SECRET

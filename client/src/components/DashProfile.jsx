@@ -481,7 +481,6 @@ export default function DashProfile() {
         </div>
       </div>
 
-      {/* Delete Account Confirmation Modal */}
       {showModal && (
         <div className='fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50'>
           <div className='bg-gradient-to-br from-slate-800 to-slate-700 rounded-3xl p-8 max-w-md mx-4 border border-slate-600 shadow-2xl'>

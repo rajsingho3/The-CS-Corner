@@ -1,7 +1,7 @@
 import PYQPaper from '../models/pyqPaper.model.js';
 import { errorHandler } from '../utils/error.js';
 
-// Create a new PYQ paper (Admin only)
+
 export const createPYQ = async (req, res, next) => {
   try {
     if (!req.user.isAdmin) {
@@ -13,7 +13,7 @@ export const createPYQ = async (req, res, next) => {
       return next(errorHandler(400, 'Please provide all required fields'));
     }
 
-    // Validate Google Drive URL if provided
+   
     if (req.body.googleDriveId && req.body.fileUrl) {
       const expectedDirectUrl = `https://drive.google.com/uc?export=download&id=${req.body.googleDriveId}`;
       if (req.body.fileUrl !== expectedDirectUrl) {
@@ -21,7 +21,7 @@ export const createPYQ = async (req, res, next) => {
       }
     }
 
-    // Create slug from title, subject, and year
+    
     const slug = `${req.body.title}-${req.body.subject}-${req.body.year}`
       .split(' ')
       .join('-')
@@ -41,14 +41,14 @@ export const createPYQ = async (req, res, next) => {
   }
 };
 
-// Get PYQ papers with filtering and pagination
+
 export const getPYQs = async (req, res, next) => {
   try {
     const startIndex = parseInt(req.query.startIndex) || 0;
     const limit = parseInt(req.query.limit) || 9;
     const sortDirection = req.query.order === 'asc' ? 1 : -1;
     
-    // Build filter object
+   
     const filter = {};
     
     if (req.query.userId) filter.userId = req.query.userId;
@@ -61,7 +61,7 @@ export const getPYQs = async (req, res, next) => {
     if (req.query.pyqId) filter._id = req.query.pyqId;
     if (req.query.isApproved !== undefined) filter.isApproved = req.query.isApproved === 'true';
     
-    // Search functionality
+    
     if (req.query.searchTerm) {
       filter.$or = [
         { title: { $regex: req.query.searchTerm, $options: 'i' } },
@@ -100,7 +100,7 @@ export const getPYQs = async (req, res, next) => {
   }
 };
 
-// Get PYQs organized by semester and year
+
 export const getPYQsByOrganization = async (req, res, next) => {
   try {
     const { course } = req.query;    if (!course) {
@@ -109,7 +109,7 @@ export const getPYQsByOrganization = async (req, res, next) => {
 
     const filter = { course, isApproved: true };
     
-    // Aggregate PYQs by semester and year
+   
     const organized = await PYQPaper.aggregate([
       { $match: filter },
       {
@@ -151,7 +151,7 @@ export const getPYQsByOrganization = async (req, res, next) => {
   }
 };
 
-// Update PYQ paper (Admin only)
+
 export const updatePYQ = async (req, res, next) => {
   try {
     const pyq = await PYQPaper.findById(req.params.pyqId);
@@ -193,7 +193,7 @@ export const updatePYQ = async (req, res, next) => {
   }
 };
 
-// Delete PYQ paper (Admin only)
+
 export const deletePYQ = async (req, res, next) => {
   try {
     const pyq = await PYQPaper.findById(req.params.pyqId);
@@ -211,7 +211,7 @@ export const deletePYQ = async (req, res, next) => {
   }
 };
 
-// Approve PYQ paper (Admin only)
+
 export const approvePYQ = async (req, res, next) => {
   try {
     if (!req.user.isAdmin) {
@@ -240,7 +240,7 @@ export const approvePYQ = async (req, res, next) => {
   }
 };
 
-// Increment download count
+
 export const incrementDownload = async (req, res, next) => {
   try {
     const updatedPYQ = await PYQPaper.findByIdAndUpdate(
@@ -259,7 +259,7 @@ export const incrementDownload = async (req, res, next) => {
   }
 };
 
-// Get statistics
+
 export const getPYQStats = async (req, res, next) => {
   try {
     const totalPYQs = await PYQPaper.countDocuments();
