@@ -122,6 +122,7 @@ const NotionEditor = ({ content, onChange, placeholder = "Start writing..." }) =
           {/* Text Formatting */}
           <div className="flex items-center gap-1 border-r border-slate-600 pr-2">
             <button
+              type="button"
               onClick={() => editor.chain().focus().toggleBold().run()}
               disabled={!editor.can().chain().focus().toggleBold().run()}
               className={`p-2 rounded-md hover:bg-slate-700 transition-colors ${
@@ -135,6 +136,7 @@ const NotionEditor = ({ content, onChange, placeholder = "Start writing..." }) =
               </svg>
             </button>
             <button
+              type="button"
               onClick={() => editor.chain().focus().toggleItalic().run()}
               disabled={!editor.can().chain().focus().toggleItalic().run()}
               className={`p-2 rounded-md hover:bg-slate-700 transition-colors ${
@@ -147,6 +149,7 @@ const NotionEditor = ({ content, onChange, placeholder = "Start writing..." }) =
               </svg>
             </button>
             <button
+              type="button"
               onClick={() => editor.chain().focus().toggleUnderline().run()}
               className={`p-2 rounded-md hover:bg-slate-700 transition-colors ${
                 editor.isActive('underline') ? 'bg-purple-600' : ''
@@ -158,6 +161,7 @@ const NotionEditor = ({ content, onChange, placeholder = "Start writing..." }) =
               </svg>
             </button>
             <button
+              type="button"
               onClick={() => editor.chain().focus().toggleStrike().run()}
               disabled={!editor.can().chain().focus().toggleStrike().run()}
               className={`p-2 rounded-md hover:bg-slate-700 transition-colors ${
@@ -170,6 +174,7 @@ const NotionEditor = ({ content, onChange, placeholder = "Start writing..." }) =
               </svg>
             </button>
             <button
+              type="button"
               onClick={() => editor.chain().focus().toggleCode().run()}
               disabled={!editor.can().chain().focus().toggleCode().run()}
               className={`p-2 rounded-md hover:bg-slate-700 transition-colors ${
@@ -186,6 +191,7 @@ const NotionEditor = ({ content, onChange, placeholder = "Start writing..." }) =
           {/* Headings */}
           <div className="flex items-center gap-1 border-r border-slate-600 pr-2">
             <button
+              type="button"
               onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
               className={`px-2 py-1 rounded-md hover:bg-slate-700 transition-colors text-sm font-medium ${
                 editor.isActive('heading', { level: 1 }) ? 'bg-purple-600' : ''
@@ -195,6 +201,7 @@ const NotionEditor = ({ content, onChange, placeholder = "Start writing..." }) =
               H1
             </button>
             <button
+              type="button"
               onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
               className={`px-2 py-1 rounded-md hover:bg-slate-700 transition-colors text-sm font-medium ${
                 editor.isActive('heading', { level: 2 }) ? 'bg-purple-600' : ''
@@ -204,6 +211,7 @@ const NotionEditor = ({ content, onChange, placeholder = "Start writing..." }) =
               H2
             </button>
             <button
+              type="button"
               onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
               className={`px-2 py-1 rounded-md hover:bg-slate-700 transition-colors text-sm font-medium ${
                 editor.isActive('heading', { level: 3 }) ? 'bg-purple-600' : ''
@@ -217,6 +225,7 @@ const NotionEditor = ({ content, onChange, placeholder = "Start writing..." }) =
           {/* Lists */}
           <div className="flex items-center gap-1 border-r border-slate-600 pr-2">
             <button
+              type="button"
               onClick={() => editor.chain().focus().toggleBulletList().run()}
               className={`p-2 rounded-md hover:bg-slate-700 transition-colors ${
                 editor.isActive('bulletList') ? 'bg-purple-600' : ''
@@ -230,6 +239,7 @@ const NotionEditor = ({ content, onChange, placeholder = "Start writing..." }) =
               </svg>
             </button>
             <button
+              type="button"
               onClick={() => editor.chain().focus().toggleOrderedList().run()}
               className={`p-2 rounded-md hover:bg-slate-700 transition-colors ${
                 editor.isActive('orderedList') ? 'bg-purple-600' : ''
@@ -244,6 +254,7 @@ const NotionEditor = ({ content, onChange, placeholder = "Start writing..." }) =
               </svg>
             </button>
             <button
+              type="button"
               onClick={() => editor.chain().focus().toggleTaskList().run()}
               className={`p-2 rounded-md hover:bg-slate-700 transition-colors ${
                 editor.isActive('taskList') ? 'bg-purple-600' : ''
@@ -259,6 +270,7 @@ const NotionEditor = ({ content, onChange, placeholder = "Start writing..." }) =
           {/* Alignment */}
           <div className="flex items-center gap-1 border-r border-slate-600 pr-2">
             <button
+              type="button"
               onClick={() => editor.chain().focus().setTextAlign('left').run()}
               className={`p-2 rounded-md hover:bg-slate-700 transition-colors ${
                 editor.isActive({ textAlign: 'left' }) ? 'bg-purple-600' : ''
@@ -270,6 +282,7 @@ const NotionEditor = ({ content, onChange, placeholder = "Start writing..." }) =
               </svg>
             </button>
             <button
+              type="button"
               onClick={() => editor.chain().focus().setTextAlign('center').run()}
               className={`p-2 rounded-md hover:bg-slate-700 transition-colors ${
                 editor.isActive({ textAlign: 'center' }) ? 'bg-purple-600' : ''
@@ -281,6 +294,7 @@ const NotionEditor = ({ content, onChange, placeholder = "Start writing..." }) =
               </svg>
             </button>
             <button
+              type="button"
               onClick={() => editor.chain().focus().setTextAlign('right').run()}
               className={`p-2 rounded-md hover:bg-slate-700 transition-colors ${
                 editor.isActive({ textAlign: 'right' }) ? 'bg-purple-600' : ''
@@ -296,6 +310,7 @@ const NotionEditor = ({ content, onChange, placeholder = "Start writing..." }) =
           {/* Media */}
           <div className="flex items-center gap-1 border-r border-slate-600 pr-2">
             <button
+              type="button"
               onClick={setLink}
               className={`p-2 rounded-md hover:bg-slate-700 transition-colors ${
                 editor.isActive('link') ? 'bg-purple-600' : ''
@@ -308,6 +323,7 @@ const NotionEditor = ({ content, onChange, placeholder = "Start writing..." }) =
               </svg>
             </button>
             <button
+              type="button"
               onClick={addImage}
               className="p-2 rounded-md hover:bg-slate-700 transition-colors"
               title="Add Image"
@@ -317,6 +333,7 @@ const NotionEditor = ({ content, onChange, placeholder = "Start writing..." }) =
               </svg>
             </button>
             <button
+              type="button"
               onClick={addYoutubeVideo}
               className="p-2 rounded-md hover:bg-slate-700 transition-colors"
               title="Add YouTube Video"
@@ -330,6 +347,7 @@ const NotionEditor = ({ content, onChange, placeholder = "Start writing..." }) =
           {/* Block Elements */}
           <div className="flex items-center gap-1 border-r border-slate-600 pr-2">
             <button
+              type="button"
               onClick={() => editor.chain().focus().toggleCodeBlock().run()}
               className={`p-2 rounded-md hover:bg-slate-700 transition-colors ${
                 editor.isActive('codeBlock') ? 'bg-purple-600' : ''
@@ -341,6 +359,7 @@ const NotionEditor = ({ content, onChange, placeholder = "Start writing..." }) =
               </svg>
             </button>
             <button
+              type="button"
               onClick={() => editor.chain().focus().toggleBlockquote().run()}
               className={`p-2 rounded-md hover:bg-slate-700 transition-colors ${
                 editor.isActive('blockquote') ? 'bg-purple-600' : ''
@@ -352,6 +371,7 @@ const NotionEditor = ({ content, onChange, placeholder = "Start writing..." }) =
               </svg>
             </button>
             <button
+              type="button"
               onClick={() => editor.chain().focus().setHorizontalRule().run()}
               className="p-2 rounded-md hover:bg-slate-700 transition-colors"
               title="Horizontal Rule"
@@ -365,6 +385,7 @@ const NotionEditor = ({ content, onChange, placeholder = "Start writing..." }) =
           {/* Table */}
           <div className="flex items-center gap-1">
             <button
+              type="button"
               onClick={() => editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()}
               className="p-2 rounded-md hover:bg-slate-700 transition-colors"
               title="Insert Table"
@@ -405,6 +426,7 @@ const NotionEditor = ({ content, onChange, placeholder = "Start writing..." }) =
             />
             <div className="flex gap-2 justify-end">
               <button
+                type="button"
                 onClick={() => {
                   setIsLinkDialogOpen(false)
                   setLinkUrl('')
@@ -414,6 +436,7 @@ const NotionEditor = ({ content, onChange, placeholder = "Start writing..." }) =
                 Cancel
               </button>
               <button
+                type="button"
                 onClick={handleLinkSubmit}
                 className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded"
               >
@@ -447,6 +470,7 @@ const NotionEditor = ({ content, onChange, placeholder = "Start writing..." }) =
             />
             <div className="flex gap-2 justify-end">
               <button
+                type="button"
                 onClick={() => {
                   setIsImageDialogOpen(false)
                   setImageUrl('')
@@ -456,6 +480,7 @@ const NotionEditor = ({ content, onChange, placeholder = "Start writing..." }) =
                 Cancel
               </button>
               <button
+                type="button"
                 onClick={handleImageSubmit}
                 className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded"
               >
